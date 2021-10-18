@@ -5,6 +5,7 @@ import BurgerConstructorStyles from './burger-constructor.module.css';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import PropTypes from 'prop-types';
+import ingredientObject from '../../utils/types.js';
 
 const BurgerConstructor = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -26,30 +27,19 @@ const BurgerConstructor = (props) => {
         );
     });
 
-    const showModal = () => {
-        setModalVisible(true)
-    }
-
-    const closeModal = (e) => {
-        if (e.type === 'keydown') {
-            setModalVisible(false);
-        } else {
-            let target = e.nativeEvent.target;
-    
-            if (target.getAttribute('backdrop')) {
-                setModalVisible(false);
-            } else if (target.closest('span') && target.closest('span').getAttribute('backdrop')) {
-                setModalVisible(false);
-            }
-        }
-    }
+    const toggleIngredient = (e) => {
+        e.stopPropagation();
+        setModalVisible((prevValue) => {
+        return !prevValue;
+        });
+    };
 
     return (
         <section className="pt-25 pl-4 pr-4">
             <section className={BurgerConstructorStyles.constructor__list}>
                 {constructorItems[0]}
                 <div className={BurgerConstructorStyles.constructor_scroll}>
-                    {constructorItems.slice(1, constructorItems.length)}
+                    {constructorItems.slice(2, constructorItems.length)}
                 </div>
                 <div className="ml-8">
                     <ConstructorElement
@@ -66,14 +56,14 @@ const BurgerConstructor = (props) => {
                     <span className="text_type_digits-medium mr-2">{totalCost}</span>
                     <CurrencyIcon />
                 </div>
-                <Button type="primary" size="large" onClick={showModal}>
+                <Button type="primary" size="large" onClick={toggleIngredient}>
                     Оформить заказ
                 </Button>
             </footer>
 
             {
                 modalVisible ?
-                    <Modal onClose={closeModal}>
+                    <Modal onClose={toggleIngredient}>
                         <OrderDetails />
                     </Modal> : ''
             }
@@ -81,20 +71,6 @@ const BurgerConstructor = (props) => {
     );
 }
 
-const ingredientObject = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    __v: PropTypes.number
-})
 
 BurgerConstructor.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientObject).isRequired

@@ -11,12 +11,12 @@ function App() {
 
   const getData = async () => {
     try {
-      let response = await fetch(apiUrl);
+      const response = await fetch(apiUrl);
       if (!response.ok) {
         throw new Error('Ответ сети был не ok.');
       }
 
-      let responseData = await response.json();
+      const responseData = await response.json();
 
       setData(responseData.data);
     } catch (error) {

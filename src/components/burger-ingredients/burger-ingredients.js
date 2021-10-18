@@ -4,6 +4,7 @@ import BurgerIngredientsStyles from './burger-ingredients.module.css';
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import PropTypes from 'prop-types';
+import ingredientObject from '../../utils/types.js';
 
 
 const BurgerIngredients = (props) => {
@@ -11,9 +12,9 @@ const BurgerIngredients = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [ingredientDetails, setIngredientDetails] = useState(null);
 
-    let rolls = [];
-    let sauces = [];
-    let fillings = [];
+    const rolls = [];
+    const sauces = [];
+    const fillings = [];
 
     const showModal = (e) => {
         let clickedIngredientId = e.currentTarget.getAttribute('id');
@@ -24,17 +25,8 @@ const BurgerIngredients = (props) => {
     }
     
     const closeModal = (e) => {
-        if (e.type === 'keydown') {
-            setModalVisible(false);
-        } else {
-            let target = e.nativeEvent.target;
-    
-            if (target.getAttribute('backdrop')) {
-                setModalVisible(false);
-            } else if (target.closest('span') && target.closest('span').getAttribute('backdrop')) {
-                setModalVisible(false);
-            }
-        }
+        e.stopPropagation();
+        setModalVisible(false);
     }
 
     // Распределение ингредиентов по типу
@@ -136,21 +128,6 @@ const BurgerIngredients = (props) => {
         </section>
     );
 }
-
-const ingredientObject = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    __v: PropTypes.number
-})
 
 BurgerIngredients.propTypes = {
     ingredients:  PropTypes.arrayOf(ingredientObject).isRequired
