@@ -1,0 +1,24 @@
+.constructor__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+}
+
+.constructor_scroll {
+    composes: constructor__list;
+    overflow-y: auto;
+    height: calc(100vh - 560px);
+    min-height: 100px;
+}
+
+.constructor__item {
+    display: flex;
+    align-items: center;
+}
+
+.constructor__info {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}

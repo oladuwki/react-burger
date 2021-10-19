@@ -1,0 +1,15 @@
+.ingredients_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.food_value {
+    display: flex;
+    gap: 20px;
+}
+
+.ingredient_image {
+    width: 80%;
+    max-width: 480px;
+}
