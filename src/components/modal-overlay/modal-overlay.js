@@ -5,8 +5,9 @@ import ModalOverlayStyles from './modal-overlay.module.css';
 const ModalOverlay = (props) => {
     const {children, onClose} = props;
     const closePopup = (e) => {
-        e.stopPropagation();
-        onClose(e);
+        if (e.target === e.currentTarget) {
+            onClose(e);
+        }
       };
 
     return (
