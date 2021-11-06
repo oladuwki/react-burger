@@ -1,43 +1,34 @@
-import React from "react";
-import IngredientDetailsStyles from './ingredients-details.module.css';
-import PropTypes from 'prop-types';
+import React from 'react';
+import ingredientDetailsStyle from './ingredient-details.module.css';
+import dataPropTypes from "../../utils/prop-types";
 
-
-const IngredientDetails = (props) => {
-
+function IngredientDetails(props) {
     return (
-        <section className={IngredientDetailsStyles.ingredients_content}>
-            <img className={`${IngredientDetailsStyles.ingredient_image} mb-4`} src={props.image_large} alt="props.name" />
-            <h2 className="text text_type_main-medium">{props.name}</h2>
-            <section className={`${IngredientDetailsStyles.food_value} mt-8 text_type_main-default text_color_inactive`}>
-                <div>
-                    <p>Калории, ккал</p>
-                    <p>{props.calories}</p>
+        <div className={ingredientDetailsStyle.container}>
+            <img src={props.data.image_large} alt=""/>
+            <h5 className="text text_type_main-medium mt-4">{props.data.name}</h5>
+            <div className={`${ingredientDetailsStyle.flex} mt-8`}>
+                <div className={`${ingredientDetailsStyle.item} mr-5`}>
+                    <span className="text text_color_inactive text_type_main-default">Калории,ккал</span>
+                    <span className="text text_color_inactive text_type_digits-default mt-2">{props.data.calories}</span>
                 </div>
-                <div>
-                    <p>Белки, г</p>
-                    <p>{props.proteins}</p>
+                <div className={`${ingredientDetailsStyle.item} mr-5`}>
+                    <span className="text text_color_inactive text_type_main-default">Белки, г</span>
+                    <span className="text text_color_inactive text_type_digits-default mt-2">{props.data.proteins}</span>
                 </div>
-                <div>
-                    <p>Жиры, г</p>
-                    <p>{props.fat}</p>
+                <div className={`${ingredientDetailsStyle.item} mr-5`}>
+                    <span className="text text_color_inactive text_type_main-default">Жиры, г</span>
+                    <span className="text text_color_inactive text_type_digits-default mt-2">{props.data.fat}</span>
                 </div>
-                <div>
-                    <p>Углеводы, г</p>
-                    <p>{props.carbohydrates}</p>
+                <div className={`${ingredientDetailsStyle.item} mr-5`}>
+                    <span className="text text_color_inactive text_type_main-default">Углеводы, г</span>
+                    <span className="text text_color_inactive text_type_digits-default mt-2">{props.data.carbohydrates}</span>
                 </div>
-            </section>
-        </section>
+            </div>
+        </div>
     )
 }
 
-IngredientDetails.propTypes = {
-    image_large: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    calories: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-}
+IngredientDetails.propTypes = {data: dataPropTypes.isRequired};
 
-export default IngredientDetails;
+export default  IngredientDetails;

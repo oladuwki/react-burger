@@ -1,0 +1,21 @@
+.product {
+    max-width: 272px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.image {
+    width: 240px;
+    height: 120px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    text-align: center;
+}

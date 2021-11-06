@@ -1,24 +1,71 @@
-.constructor__list {
+.constructor {
+    width: 600px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    position: relative;
+    justify-content: flex-start;
 }
 
-.constructor_scroll {
-    composes: constructor__list;
-    overflow-y: auto;
-    height: calc(100vh - 560px);
-    min-height: 100px;
+.list {
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
 }
 
-.constructor__item {
+.item {
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
-.constructor__info {
+.list_scroll {
+    composes: list;
+    height: 50vh;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.list_scroll .item {
+    justify-content: flex-start;
+}
+
+.order {
     display: flex;
     justify-content: flex-end;
+}
+
+.total_amount {
+    display: flex;
+    align-items: center;;
+}
+
+.total_amount span {
+    margin-right: 8px;
+}
+
+.nobun {
+    display: flex;
+    justify-content: center;
     align-items: center;
+    border: 1px dashed grey;
+    width: 488px;
+    padding: 16px 24px;
+}
+
+.nobun_top {
+    composes: nobun;
+    border-radius: var(--top-constructor-item-border-radius);
+}
+
+.nobun_bottom {
+    composes: nobun;
+    border-radius: var(--bottom-constructor-item-border-radius);
+}
+
+.item_isHovering {
+    border: 1px solid rgb(55, 0, 255);
 }

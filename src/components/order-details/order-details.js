@@ -1,19 +1,26 @@
-import React from "react";
-import OrderDetailsStyles from './order-details.module.css';
-import iconDone from '../../images/done.svg'
+import React from 'react';
+import orderDetailsStyles from './order-details.module.css';
+import checkImage from '../../images/done.svg';
+import PropTypes from "prop-types";
 
-const OrderDetails = (props) => {
-    return (
-        <section className={`${OrderDetailsStyles.order_details} pt-20 pb-20`}>
-            <h1 className="text text_type_digits-large mb-8">034536</h1>
-            <p className="text text_type_main-medium">индефикатор заказа</p>
-            <span className="mt-15 mb-15">
-                <img src={iconDone} alt="Done icon" />
-            </span>
-            <p className="text text_type_main-small mb-2">Ваш заказ начали готовить</p>
-            <p className="text text_type_main-small text_color_inactive">Дождитесь готовности на орбитальной станции</p>
-        </section>
+function OrderDetails({id}) {
+    return(
+        <div className={`${orderDetailsStyles.order} pb-15`}>
+            <h3 className={`text text_primary_ligth text_type_digits-large`}>
+                {id}
+            </h3>
+            <p className='text text_type_main-medium mt-8'>идентификатор заказа</p>
+            <div className={`${orderDetailsStyles.status} mt-15 mb-15`}>
+                <img src={checkImage} alt="done"/>
+            </div>
+            <p className="text text_type_main-default">Ваш заказ начали готовить</p>
+            <p className="text text_type_main-default text_color_inactive mt-2">Дождитесь готовности на орбитальной станции</p>
+        </div>
     )
 }
 
-export default OrderDetails;
+OrderDetails.propTypes = {
+    id: PropTypes.number.isRequired
+}
+
+export default  OrderDetails;
