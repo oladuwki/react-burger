@@ -1,44 +1,93 @@
 import {
-    GET_INGREDIENTS_REQUEST,
-    GET_INGREDIENTS_SUCCESS,
-    GET_INGREDIENTS_FAILED,
-    SET_INGREDIENT_TO_MODAL, REMOVE_INGREDIENT_FROM_MODAL
-} from "../actions/burger-ingredients";
+    CHANGE_CURRENT_INGREDIENT,
+    LOAD_INGREDIENTS,
+    LOAD_INGREDIENTS_FAILED,
+    LOAD_INGREDIENTS_SUCCESS,
+    CLEAR_CURRENT_INGREDIENT,
+    CHANGE_CURRENT_CATEGORY_BY_DISTANCE,
+    ADD_CATEGORY_ID,
+    CHANGE_CURRENT_CATEGORY_BY_ID
+} from '../actions/burger-ingredients';
 
 const initialState = {
     ingredients: [],
-    ingredientsRequest: false,
-    ingredientsFailed: false,
-    ingredientDetails: {}
-};
+    currentIngredient: {},
+    currentCategory: undefined,
+    categoryIds: [],
+    isLoading: false,
+    loadingFailed: false
+}
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case GET_INGREDIENTS_REQUEST: {
+const getCategoryByDistance = (ids, distance) => {
+    let min = 99999;
+    let current;
+    ids.forEach(id => {
+        const d = Math.abs(distance - document.getElementById(id).getBoundingClientRect().y);
+        if (d < min){
+            min = d;
+            current = id;
+        }
+    });
+    return current;
+}
+
+export const BurgerIngredientsReducer = (state = initialState, action) => {
+    switch (action.type){
+        case LOAD_INGREDIENTS:
             return {
                 ...state,
-                ingredientsRequest: true
+                isLoading: true,
+                loadingFailed: false
+            }
+        case LOAD_INGREDIENTS_FAILED:
+            return {
+                ...state,
+                isLoading: false,
+                loadingFailed: true
+            }
+        case LOAD_INGREDIENTS_SUCCESS:
+            return {
+                ...state,
+                ingredients: action.ingredients,
+                isLoading: false,
+                loadingFailed: false
+            };
+        case CHANGE_CURRENT_INGREDIENT:
+            return {
+                ...state,
+                currentIngredient: {
+                    ...state.currentIngredient,
+                    ...state.ingredients.find(ingr => ingr._id === action.id)
+                }
+            };
+        case CLEAR_CURRENT_INGREDIENT:
+            return {
+                ...state,
+                currentIngredient: {}
+            };
+        case ADD_CATEGORY_ID: {
+            if (state.categoryIds.includes(action.id)){
+                return state;
+            }
+            return {
+                ...state,
+                categoryIds: [
+                    ...state.categoryIds,
+                    action.id
+                ]
             };
         }
-        case GET_INGREDIENTS_SUCCESS: {
-            return {...state, ingredientsFailed: false, ingredients: action.ingredients, ingredientsRequest: false};
-        }
-        case GET_INGREDIENTS_FAILED: {
-            return {...state, ingredientsFailed: true, ingredientsRequest: false};
-        }
-        case SET_INGREDIENT_TO_MODAL: {
+        case CHANGE_CURRENT_CATEGORY_BY_DISTANCE:
             return {
                 ...state,
-                ingredientDetails: action.item
-            }
-        }
-        case REMOVE_INGREDIENT_FROM_MODAL: {
+                currentCategory: getCategoryByDistance(state.categoryIds, action.distance)
+            };
+        case CHANGE_CURRENT_CATEGORY_BY_ID:
             return {
                 ...state,
-                ingredientDetails: {}
-            }
-        }
+                currentCategory: action.id
+            };
         default:
             return state;
     }
-};
+}

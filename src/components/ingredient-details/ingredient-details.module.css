@@ -1,20 +1,22 @@
-.flex {
-    display: flex;
-    justify-content: center;
-}
-
 .container {
-    composes: flex;
-    align-items: center;
-    flex-direction: column;
+    padding-bottom: 60px;
+    text-align: center;
 }
 
-.item {
-    composes: flex;
-    align-items: center;
-    flex-direction: column;
+.title {
+    text-align: left;
 }
 
-.item:last-child {
-    margin-right: 0;
+.name {
+    margin-bottom: 32px;
+}
+
+.photo {
+    margin-bottom: 16px;
+}
+
+.subInfo {
+    display: grid;
+    grid-column-gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
 }

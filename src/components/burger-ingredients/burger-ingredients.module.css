@@ -1,53 +1,51 @@
-.constr {
-    max-width: 600px;
+.categoryBar {
     display: flex;
-    flex-direction: column;
 }
 
-.tabs {
-    display: flex;
+.categoryBlock {
+    overflow-y: auto;
+    max-height: 700px;
+    height: 100%;
+}
+
+.title {
+    text-align: left
+}
+
+.category {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.noPointList {
     list-style-type: none;
-    margin-bottom: 0;
-    padding: 0;
 }
 
-.tab {
-    width: 200px;
+.categoryList {
+    text-align: left;
+    padding-top: 24px;
+    padding-left: 16px
 }
 
-.tab__link {
-    text-decoration: none;
-    color: #8585AD;
-    display: flex;
-    justify-content: center;
-    box-shadow: inset 0px -1px 0px #2F2F37;
+.ingredientsMenu {
+    margin-top: 40px;
 }
 
-.tab__link.active {
-    color: #F2F2F3;
-    box-shadow: inset 0px -2px 0px #4C4CFF;
+.menuContent {
+    margin-top: 20px;
 }
 
-.products {
-    height: 60vh;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+.menuItem {
+    display: inline-block;
+    text-align: center;
+    padding-right: 24px;
+    padding-bottom: 32px;
+    position: relative;
+    cursor: pointer;
 }
 
-.products::-webkit-scrollbar {
-    width: 8px;
-}
-
-.products::-webkit-scrollbar-track {
-    background: #2F2F37;
-}
-
-.products::-webkit-scrollbar-thumb {
-    background: #8585AD;
-}
-
-.products__cont {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+.menuItemCounter {
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }

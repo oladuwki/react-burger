@@ -1,71 +1,33 @@
-.constructor {
-    width: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+.ingredientList {
+    height: 600px;
 }
 
-.list {
-    padding: 0;
+.chosenItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+li {
     list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    width: 100%;
 }
 
-.item {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.dynamicPart {
+    max-height: 400px;
+    overflow-y: auto;
 }
 
-.list_scroll {
-    composes: list;
-    height: 50vh;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+.burgerConstructor {
+    margin-top: 100px;
+    margin-left: 40px;
 }
 
-.list_scroll .item {
-    justify-content: flex-start;
+.totalBar {
+    margin-top: 40px;
+    text-align: right;
 }
 
-.order {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.total_amount {
-    display: flex;
-    align-items: center;;
-}
-
-.total_amount span {
-    margin-right: 8px;
-}
-
-.nobun {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px dashed grey;
-    width: 488px;
-    padding: 16px 24px;
-}
-
-.nobun_top {
-    composes: nobun;
-    border-radius: var(--top-constructor-item-border-radius);
-}
-
-.nobun_bottom {
-    composes: nobun;
-    border-radius: var(--bottom-constructor-item-border-radius);
-}
-
-.item_isHovering {
-    border: 1px solid rgb(55, 0, 255);
+.priceCurrency {
+    display: inline-block;
+    margin-right: 40px;
 }

@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
-const dataPropTypes = PropTypes.shape({
+const DataItemPropTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -12,7 +12,7 @@ const dataPropTypes = PropTypes.shape({
   image: PropTypes.string.isRequired,
   image_mobile: PropTypes.string.isRequired,
   image_large: PropTypes.string.isRequired,
-  __v :PropTypes.number.isRequired,
+  __v: PropTypes.number.isRequired,
 });
 
-export default dataPropTypes;
+export default DataItemPropTypes;

@@ -1,119 +1,96 @@
-import React, {createRef, useEffect} from 'react';
+import Category from './category';
+import CategoryBar from './category-bar';
 import ingredientsStyles from './burger-ingredients.module.css';
-import Ingredient from "../ingredient/ingredient";
-import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import {useDispatch, useSelector} from "react-redux";
-import {
-    getIngredients,
-    REMOVE_INGREDIENT_FROM_MODAL,
-    SET_INGREDIENT_TO_MODAL
-} from "../../services/actions/burger-ingredients";
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 
-function BurgerIngredients() {
-    const {ingredients, ingredientsRequest, ingredientsError, ingredientDetails} = useSelector(state => state.burgerIngredients)
-    const [current, setCurrent] = React.useState('buns');
-    const [modalIsOpen, setModalIsOpen] = React.useState(false);
-    const bunsRef = createRef();
-    const saucesRef = createRef();
-    const mainsRef = createRef();
-    const dispatch = useDispatch();
+import { useDispatch, useSelector } from 'react-redux';
 
-    useEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch]);
+import dictionary from '../../utils/dictionary.json'
+import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '../../services/actions/burger-ingredients';
+import { useEffect, useRef } from 'react';
 
-    const handleOpenModal = (e) => {
-        const id = e.currentTarget.getAttribute('_id');
-        dispatch({
-            type: SET_INGREDIENT_TO_MODAL,
-            item: ingredients.find((item) => item._id === id)
-        })
-        setModalIsOpen(true);
-    }
-    const handleCloseModal = () => {
-        setModalIsOpen(false);
-        dispatch({
-            type: REMOVE_INGREDIENT_FROM_MODAL
-        })
-    }
-    const handleTabClick = (value) => {
-        setCurrent(value);
-    }
+import { ADD_CATEGORY_ID } from '../../services/actions/burger-ingredients';
 
-    const handleScroll = (e) => {
-        const scrollContainer = e.target;
-        const saucesContainer = saucesRef.current.getBoundingClientRect();
-        const mainsContainer = mainsRef.current.getBoundingClientRect();
-        // console.log(`buns: ${scrollContainer.offsetTop - bunsContainer.top}, sauces: ${scrollContainer.offsetTop - saucesContainer.top}, mains: ${scrollContainer.offsetTop - mainsContainer.top}`)
-        if (scrollContainer.offsetTop - saucesContainer.top < 0) {
-            setCurrent('buns');
-        } else if (scrollContainer.offsetTop - mainsContainer.top < 0) {
-            setCurrent('sauces');
-        } else {
-            setCurrent('mains');
+const getCategoryDescriptions = (ingredients) => {
+    const categories = [...new Set(ingredients.map(ingr => ingr.type))];
+
+    const result = categories.map(type => {
+        if (dictionary[type]){
+            return {
+                code: type,
+                title: dictionary[type].ru
+            }
         }
-    }
+        return {
+            code: type,
+            title: type
+        }
+    });
+
+    return result;
+}
+
+const onIngredientsRendered = (descriptions, dispatch) => {
+    descriptions.forEach(desc => {
+        dispatch({
+            type: ADD_CATEGORY_ID,
+            id: desc.title
+        });
+    });
+};
+
+const BurgerIngredients = () => {
+    const dispatch = useDispatch();
+    const newIngredients = useSelector(store => store.ingredientsReducer.ingredients);
+    const current = useSelector(store => store.ingredientsReducer.currentIngredient);
+    const categoryDescriptions = getCategoryDescriptions(newIngredients);
+    const getCategoryTitles = () => categoryDescriptions.map(cat => cat.title);
+    const onCloseItem = () => dispatch({type: CLEAR_CURRENT_INGREDIENT})
+    useEffect(()=> { onIngredientsRendered(categoryDescriptions, dispatch)}, [categoryDescriptions, dispatch]);
 
     return (
-        <>
-            {ingredientsRequest && !ingredientsError && (
-                <h1>Идет загрузка...</h1>
-            )}
-            {ingredientsError && !ingredientsRequest && (
-                <h1>Произошла ошибка попробуйте позже</h1>
-            )}
-            {!ingredientsError && !ingredientsRequest && ingredients.length > 0 && (
-                <div className={ingredientsStyles.constr}>
-                    <h1 className="text text_type_main-large mt-10">Соберите бургер</h1>
-                    <div style={{display: 'flex'}} className='mt-5'>
-                        <a href="#buns">
-                            <Tab value="buns" active={current === 'buns'} onClick={handleTabClick}>
-                                Булка
-                            </Tab>
-                        </a>
-                        <a href="#sauces">
-                            <Tab value="sauces" active={current === 'sauces'} onClick={handleTabClick}>
-                                Соусы
-                            </Tab>
-                        </a>
-                        <a href="#mains">
-                            <Tab value="mains" active={current === 'mains'} onClick={handleTabClick}>
-                                Начинки
-                            </Tab>
-                        </a>
-                    </div>
-                    <div className={`${ingredientsStyles.ingredients} mt-10`}>
-                        <div className={ingredientsStyles.products} onScroll={handleScroll}>
-                            <h3 className="text text_type_main-medium" ref={bunsRef} id="buns">Булки</h3>
-                            <div className={ingredientsStyles.products__cont}>
-                                {ingredients.filter((item) => item.type === 'bun').map((item) => <Ingredient
-                                    onOpen={handleOpenModal} {...item} key={item._id}/>)}
-                            </div>
-                            <h3 className="text text_type_main-medium" ref={saucesRef} id="sauces">Соусы</h3>
-                            <div className={ingredientsStyles.products__cont}>
-                                {ingredients.filter((item) => item.type === 'sauce').map((item) => <Ingredient
-                                    onOpen={handleOpenModal} {...item} key={item._id}/>)}
-                            </div>
-                            <h3 className="text text_type_main-medium" ref={mainsRef} id="mains">Начинки</h3>
-                            <div className={ingredientsStyles.products__cont}>
-                                {ingredients.filter((item) => item.type === 'main').map((item) => <Ingredient
-                                    onOpen={handleOpenModal} {...item} key={item._id}/>)}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )
-            }
-            {modalIsOpen && ingredientDetails && (
-                <Modal onClose={handleCloseModal} title={'Детали ингредиента'}>
-                    <IngredientDetails data={ingredientDetails}/>
-                </Modal>)
-            }
-        </>
-    );
-
+        <section className={ingredientsStyles.ingredientsMenu}>
+            <CombineBurgerTitle/>
+            <div className={ingredientsStyles.menuContent}>
+                <CategoryBar titles={getCategoryTitles()}/>
+                <CategoriesContainer>
+                    {
+                        categoryDescriptions.map(desc => <Category key={desc.code} code={desc.code} title={desc.title}/>)
+                    }
+                </CategoriesContainer>
+            </div>
+            <Modal caption="Детали ингредиента" show={!!current._id} closeHandler={onCloseItem}>
+                <IngredientDetails/>
+            </Modal>
+        </section>
+    )
 }
+
+const CategoriesContainer = (props) => {
+    const scrollableList = useRef(null);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        function handleNavigation(e) {
+            dispatch({
+                type: CHANGE_CURRENT_CATEGORY_BY_DISTANCE,
+                distance: scrollableList.current.getBoundingClientRect().y
+            });
+        }
+        scrollableList.current.addEventListener("scroll", handleNavigation);
+    }, [scrollableList, dispatch]);
+
+    return (
+        <div className={ingredientsStyles.categoryBlock} ref={scrollableList}>
+            { props.children }
+        </div>
+    );
+}
+
+const CombineBurgerTitle = () => (
+    <p className={`${ingredientsStyles.title} text text_type_main-large`}>
+        Соберите бургер
+    </p>
+);
 
 export default BurgerIngredients;

@@ -1,77 +1,104 @@
 import {
-    GET_ORDER_FAILED,
-    GET_ORDER_SUCCESS,
-    GET_ORDER_REQUEST,
-    ADD_INGREDIENT_TO_CONSTRUCTOR,
-    ADD_BUN_TO_CONSTRUCTOR,
-    REMOVE_INGREDIENT_FROM_CONSTRUCTOR, MOVE_INGREDIENT_IN_CONSTRUCTOR, CLEAR_ORDER, CLEAR_CONSTRUCTOR,
-} from "../actions/burger-constructor.jsx";
+    NEW_ORDER,
+    MAKE_ORDER,
+    MAKE_ORDER_FAILED,
+    ADD_INGREDIENT,
+    REMOVE_INGREDIENT,
+    ADD_BUN,
+    MOVE_INGREDIENT,
+    MAKE_ORDER_SUCCESS
+} from '../actions/burger-constructor'
 
 const initialState = {
-    order: null,
-    orderRequest: false,
-    orderFailed: false,
-
-    ingredients: [],
-    bun: null,
-
-    totalPrice: 0
+    chosenIngredients: [],
+    hasBun: false,
+    currentOrder: {},
+    currentOrderFailed: false,
+    currentOrderIsLoading: false
 }
 
-export const constructorReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case GET_ORDER_FAILED:
+export const BurgerConstructorReducer = (state = initialState, action) => {
+    switch (action.type){
+        case ADD_BUN:
+            if (state.hasBun){
+                const newIngredients = [...state.chosenIngredients];
+                newIngredients.pop();
+                newIngredients.shift();
+                newIngredients.push(action.id);
+                newIngredients.unshift(action.id);
+                return {
+                    ...state,
+                    chosenIngredients: newIngredients
+                };
+            } else {
+                return {
+                    ...state,
+                    hasBun: true,
+                    chosenIngredients: [
+                        action.id,
+                        ...state.chosenIngredients,
+                        action.id
+                    ]
+                };
+            }
+        case ADD_INGREDIENT:
+            if (state.hasBun){
+                const newIngredients = [...state.chosenIngredients];
+                newIngredients.splice(state.chosenIngredients.length - 1, 0, action.id);
+                return {
+                    ...state,
+                    chosenIngredients: newIngredients
+                };
+            } else {
+                return state;
+            }
+        case MOVE_INGREDIENT: {
+            const newIngredients = [...state.chosenIngredients];
+            let tmp = newIngredients[action.whatIndex + 1];
+            newIngredients.splice(action.whatIndex + 1, 1);
+            newIngredients.splice(action.whereIndex + 1, 0, tmp);
             return {
                 ...state,
-                orderFailed: true
-            }
-        case GET_ORDER_REQUEST:
+                chosenIngredients: newIngredients
+            };
+        }
+        case REMOVE_INGREDIENT:
+            const newIngredients = [...state.chosenIngredients];
+            newIngredients.splice(action.index + 1, 1);
             return {
                 ...state,
-                orderRequest: true
-            }
-        case GET_ORDER_SUCCESS:
+                chosenIngredients: newIngredients
+            };
+        case MAKE_ORDER:
             return {
                 ...state,
-                order: action.payload
-            }
-        case CLEAR_ORDER:
+                currentOrderIsLoading: true,
+                currentOrderFailed: false
+            };
+        case MAKE_ORDER_SUCCESS:
             return {
                 ...state,
-                order: null
-            }
-        case ADD_INGREDIENT_TO_CONSTRUCTOR:
+                currentOrder: {
+                    No: action.No,
+                    success: action.success
+                },
+                currentOrderIsLoading: false,
+                currentOrderFailed: false
+            };
+        case MAKE_ORDER_FAILED:
             return {
                 ...state,
-                ingredients: [...state.ingredients, action.item],
-            }
-        case ADD_BUN_TO_CONSTRUCTOR:
+                currentOrderIsLoading: false,
+                currentOrderFailed: true
+            };
+        case NEW_ORDER:
             return {
                 ...state,
-                bun: action.item,
-            }
-        case REMOVE_INGREDIENT_FROM_CONSTRUCTOR:
-            return {
-                ...state,
-                ingredients: [
-                    ...state.ingredients.filter((item) => item.uuid !== action.id)
-                ],
-            }
-        case MOVE_INGREDIENT_IN_CONSTRUCTOR:
-            let ingredients = [...state.ingredients];
-            const dragCard = ingredients[action.dragIndex];
-            ingredients.splice(action.dragIndex, 1);
-            ingredients.splice(action.hoverIndex, 0, dragCard)
-            return {
-                ...state,
-                ingredients: ingredients
-            }
-        case CLEAR_CONSTRUCTOR:
-            return {
-                ...state,
-                ingredients: [],
-                bun: null
-            }
+                currentOrder: {
+                },
+                currentOrderFailed: false,
+                currentOrderIsLoading: false
+            };
         default:
             return state;
     }

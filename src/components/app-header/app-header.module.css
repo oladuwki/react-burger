@@ -1,38 +1,17 @@
-.body--container {
-    font-family: "JetBrains Mono", sans-serif;
+.NavButton {
+    margin-top: 16px;
+    margin-bottom: 16px;
 }
-.appbar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    max-width: 1360px;
-    margin: auto;
-    height: 100px;
-    align-items: center;
+
+.NavButtonIcon {
+    margin-right: 8px;
 }
-.container__button {
-    display: flex;
-    flex-direction: row;
-    margin-left: 50px;
-    color: #8585AD;
+
+.NavButtonTitle {
+    float: right;
+    margin-left: 13px;
 }
-.title__button {
-    font-size: 16px;
-    margin-left: 8px;
-}
-.icons path {
-    fill:#8585AD;
-    stroke: #8585AD;
-}
-.icons path:hover {
-    fill:white;
-    stroke: white;
-}
-.container__buttons {
-    display: flex;
-    flex-direction: row;
-}
-.container__button:hover {
-    color: white;
-    fill: white;
+
+.AppHeader {
+    text-align: center;
 }
