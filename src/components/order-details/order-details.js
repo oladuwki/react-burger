@@ -1,6 +1,6 @@
 import styles from './order-details.module.css'
 import {} from '@ya.praktikum/react-developer-burger-ui-components';
-import orderSuccessImage from '../../images/ingredient.png'
+import orderSuccessImage from '../../images/done.svg'
 import PropTypes from 'prop-types'
 
 const OrderDetails = ({No, success}) => (

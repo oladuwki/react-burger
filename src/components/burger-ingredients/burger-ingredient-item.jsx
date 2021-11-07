@@ -23,7 +23,7 @@ const BurgerIngredientItem = ({id, name, image, price, isBun = false}) => {
                 <p className="text text_type_digits-default">
                     {price} <CurrencyIcon/>
                 </p>
-                <p>{name}</p>
+                <p className={`${styles.ingredientsName} text text_type_main-default`}>{name}</p>
             </div>
         </div>
     )

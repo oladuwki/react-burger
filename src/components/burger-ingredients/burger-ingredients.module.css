@@ -4,7 +4,7 @@
 
 .categoryBlock {
     overflow-y: auto;
-    max-height: 700px;
+    max-height: 600px;
     height: 100%;
 }
 
@@ -19,16 +19,20 @@
 
 .noPointList {
     list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(2, 272px);
+    column-gap: 24px;
 }
 
 .categoryList {
     text-align: left;
     padding-top: 24px;
-    padding-left: 16px
+    padding-left: 0px
 }
 
 .ingredientsMenu {
     margin-top: 40px;
+    width: 600px;
 }
 
 .menuContent {
@@ -36,16 +40,20 @@
 }
 
 .menuItem {
-    display: inline-block;
+    display: grid;
     text-align: center;
-    padding-right: 24px;
     padding-bottom: 32px;
+    width: 272px;
     position: relative;
     cursor: pointer;
 }
 
 .menuItemCounter {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 0;
+    right: 0;
+}
+
+.ingredientsName {
+    width: 272px;
 }
