@@ -7,7 +7,7 @@ import styles from './modal.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 const Modal = ({caption, closeHandler, show, children}) => {
-    const root = document.getElementById("react-modals");
+    const root = document.getElementById("modals-root");
 
     React.useLayoutEffect(() => {
         function onEscape(e) {
