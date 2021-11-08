@@ -12,7 +12,7 @@ const makeAlignmentLabel = (baseLabel, type) => {
     } else if (type === "top") {
         result = "(верх)"
     }
-    return (<>{baseLabel}<br/>{result}</>);
+    return (<>{baseLabel}{result}</>);
 }
 
 const isCenter = (type) => {

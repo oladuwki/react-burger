@@ -24,7 +24,6 @@ function App() {
                     </Provider>
                 </main>
             </div>
-            <div id="react-modals"/>
         </>
     );
 }

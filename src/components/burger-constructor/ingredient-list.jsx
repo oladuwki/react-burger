@@ -35,7 +35,7 @@ const IngredientList = ({ingredients}) => {
     }
 
     const renderScrollablePart = () => (
-        <div className={constructorStyles.dynamicPart}>
+        <div className={constructorStyles.dynamicPart} style={{ border: `${isHover ? '2px solid #4c4cff' : ''}`, borderRadius: 40 }} >
             { ingredients.slice(1, getListLength() - 1).map((ingr, index) => renderItem(index, ingr)) }
         </div>
     )
@@ -50,15 +50,18 @@ const IngredientList = ({ingredients}) => {
         }
     }
 
-    const [, dropTarget] = useDrop({
+    const [{ isHover }, dropTarget] = useDrop({
         accept: "ingredient-details",
+        collect: monitor => ({
+            isHover: monitor.isOver()
+        }),
         drop(item) {
             onDropHandler(item);
         }
     });
 
     return (
-        <ul className={constructorStyles.ingredientList} ref={dropTarget}>
+        <ul className={constructorStyles.ingredientList} style={{ border: `${isHover ? '2px solid #4c4cff' : ''}`, borderRadius: 40 }} ref={dropTarget}>
             { isNotEmpty() ? renderTopItemLocked(0, {...ingredients[0]}) : ""}
             { isNotEmpty() ? renderScrollablePart() : "" }
             { isNotEmpty() ? renderBottomItemLocked(ingredients.length - 1, {...ingredients[0]}) : "" }
@@ -67,7 +70,7 @@ const IngredientList = ({ingredients}) => {
 }
 
 const Bun = ({id, data, type}) => (
-    <li key={id}>
+    <li key={id} >
         <ChosenIngredient id={id} {...data} type={type} isLocked={true}/>
     </li>
 );
@@ -76,22 +79,38 @@ const DraggableIngredient = ({id, data}) => {
     const ref = useRef(null);
     const dispatch = useDispatch();
 
-    const [, drag] = useDrag({
-        type: "ingredientInBurger",
-        item: {id}
-    });
-
     const [, drop] = useDrop({
         accept: "ingredientInBurger",
-        drop(item) {
+        hover: (item, monitor) => {
+            if (!ref.current) return;
+            const whatIndex = item.id;
+            const whereIndex = id;
+            if (whatIndex === whereIndex) return;
+            const hoverBoundingRect = ref.current.getBoundingClientRect();
+            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+            const clientOffset = monitor.getClientOffset();
+            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            if (whatIndex < whereIndex && hoverClientY < hoverMiddleY) return;
+            if (whatIndex > whereIndex && hoverClientY > hoverMiddleY) return;
             dispatch({type: MOVE_INGREDIENT, whatIndex: item.id, whereIndex: id});
+            item.id = whereIndex;
         }
     });
+
+    const [{ opacity }, drag] = useDrag({
+        type: "ingredientInBurger",
+        item: {id},
+        collect: monitor => ({
+            opacity: monitor.isDragging() ? 0 : 1
+        })
+    });
+
+
 
     drag(drop(ref));
 
     return (
-        <li key={id} ref={ref}>
+        <li key={id} ref={ref} style={{ opacity: `${opacity}` }} >
             <ChosenIngredient id={id} {...data}/>
         </li>
     );
