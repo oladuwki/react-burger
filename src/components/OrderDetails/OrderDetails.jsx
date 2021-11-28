@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import orderDetails from './OrderDetails.module.css';
-import doneIcon from '../../images/done.png';
+import doneIcon from '../../images/done.svg';
 
 const OrderDetails = () => {
   const { orderNumber, orderRequest } = useSelector(state => state.order);

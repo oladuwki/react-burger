@@ -15,7 +15,13 @@ import {
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAILED
 } from '../types';
+
 import { MAIN_API, setCookies, getCookie, retriableFetch } from '../../utils/constants';
+
+function checkResponse(res) {
+  if (res.ok) return res.json();
+  else return res.json().then(err => Promise.reject(err));
+}
 
 export const register = ({ email, password, name, history }) => {
   return dispatch => {
@@ -29,10 +35,7 @@ export const register = ({ email, password, name, history }) => {
       },
       body: JSON.stringify({ email: email, password: password, name: name })
     })
-      .then(res => {
-        if (res.ok) return res.json();
-        else return res.json().then(err => Promise.reject(err));
-      })
+      .then(checkResponse)
       .then(res => {
         if (res.success) {
           dispatch({ type: REGISTER_SUCCESS });
@@ -53,10 +56,7 @@ export const login = ({ email, password, history }) => {
       },
       body: JSON.stringify({ email: email, password: password })
     })
-      .then(res => {
-        if (res.ok) return res.json();
-        else return res.json().then(err => Promise.reject(err));
-      })
+        .then(checkResponse)
       .then(res => {
         if (res.success) {
           setCookies(res);
@@ -76,10 +76,7 @@ export const refresh = () => {
       'Content-type': 'application/json'
     },
     body: JSON.stringify({ token: `${refreshToken}` })
-  }).then(res => {
-    if (res.ok) return res.json();
-    else return res.json().then(err => Promise.reject(err));
-  });
+  }).then(checkResponse);
 };
 
 export const logout = () => {
@@ -93,10 +90,7 @@ export const logout = () => {
       },
       body: JSON.stringify({ token: `${refreshToken}` })
     })
-      .then(res => {
-        if (res.ok) return res.json();
-        else return res.json().then(err => Promise.reject(err));
-      })
+      .then(checkResponse)
       .then(res => {
         if (res.success) dispatch({ type: LOGOUT_SUCCESS });
         else Promise.reject(res);
