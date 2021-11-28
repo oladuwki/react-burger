@@ -1,0 +1,14 @@
+.modal {
+    position: relative;
+    width: 50%;
+    border-radius: 40px;    
+    background-color: #1c1c21;
+}
+
+.closeIcon {
+    position: absolute;
+    top: 60px;
+    right: 40px;
+    cursor: pointer;
+    z-index: 2;
+}
