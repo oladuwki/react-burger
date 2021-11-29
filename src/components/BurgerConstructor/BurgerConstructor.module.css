@@ -1,0 +1,54 @@
+.content {
+    width: 48%;
+}
+
+.list {
+    height: calc(100vh - 500px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #8585AD;
+    scrollbar-track-color: #2F2F37;
+}
+
+.list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+    background-color: #2F2F37;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.summary {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.summaryPrice {
+    display: flex;
+    align-items: center;
+}
+
+.summaryPriceValue {
+    font-size: 36px;
+    line-height: 24px;
+}
+
+.button {
+    background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+    border-radius: 64px;
+    color: #F2F2F3;
+    text-align: center;
+    border: 0;
+    font-size: 16px;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.button:disabled {
+    opacity: .5;
+}

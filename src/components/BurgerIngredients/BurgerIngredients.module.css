@@ -1,0 +1,40 @@
+.content {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs {
+    width: 100%;
+    display: flex;
+}
+
+.categories {
+    width: 100%;
+    height: calc(100vh - 250px);
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #8585AD;
+    scrollbar-track-color: #2F2F37;
+}
+
+.categories::-webkit-scrollbar {
+    width: 8px;
+}
+
+.categories::-webkit-scrollbar-track {
+    background-color: #2F2F37;
+}
+
+.categories::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.category {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
