@@ -1,47 +1,58 @@
-import React, {useEffect} from "react";
-import ReactDOM from "react-dom";
-import PropTypes from 'prop-types';
-import ModalStyles from './modal.module.css';
+import PropTypes from 'prop-types'
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import ModalOverlay from "../modal-overlay/modal-overlay";
-import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import ModalOverlay from '../modal-overlay/modal-overlay'
+import styles from './modal.module.css'
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-const modalRoot = document.getElementById("modals-root");
+const Modal = ({caption, closeHandler, show, children}) => {
+    const root = document.getElementById("modals-root");
 
-const Modal = (props) => {
-    const {onClose, title, children} = props;
+    React.useLayoutEffect(() => {
+        function onEscape(e) {
+            if (e.key === "Escape") {
+                closeHandler();
+            }
+        }
 
-    useEffect(() => {
-        const handleEscapeDown = (e) => {
-          if (e.key === 'Escape') {
-            onClose(e);
-          }
-        };
-    
-        window.addEventListener('keydown', handleEscapeDown);
-    
+        document.body.addEventListener("keyup", onEscape);
+
         return () => {
-          window.removeEventListener('keydown', handleEscapeDown);
+            document.body.removeEventListener("keyup", onEscape);
         };
-      }, [onClose]);
+    }, [closeHandler]);
 
-    return ReactDOM.createPortal((
-        <ModalOverlay onClose={onClose}>
-            <article className={`${ModalStyles.modal} p-10`}>
-                <span backdrop="true" className={ModalStyles.modal__close}>
-                    <CloseIcon onClick={onClose} />
-                </span>
-                <h1 className={`${ModalStyles.modal__header} text text_type_main-large`}>{title}</h1>
-                {children}
-            </article>
-        </ModalOverlay>
-    ), modalRoot)
+    return show && ReactDOM.createPortal(
+        (<>
+            <div className={`${styles.Modal}`}>
+                <div className={styles.TopPanel}>
+                    <div className={`${styles.Caption} text text_type_main-medium`}>
+                        {caption}
+                    </div>
+                    <div className={styles.CloseButton}>
+                        <CloseIcon type="primary" onClick={closeHandler}/>
+                    </div>
+                </div>
+
+                <div className={styles.ModalContent}>
+                    {children}
+                </div>
+            </div>
+            <ModalOverlay onClick={closeHandler}/>
+        </>),
+        root
+    )
+};
+
+Modal.defaultProps = {
+    caption: ""
 }
 
 Modal.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    title: PropTypes.string,
-    children: PropTypes.object.isRequired
+    closeHandler: PropTypes.func.isRequired,
+    caption: PropTypes.string.isRequired,
+    children: PropTypes.element.isRequired
 }
 
 export default Modal;

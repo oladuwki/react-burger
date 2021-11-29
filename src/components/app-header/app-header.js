@@ -1,28 +1,32 @@
-import React from "react";
-import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import AppHeaderStyles from './app-header.module.css';
+import { MenuIcon, ProfileIcon, BurgerIcon, Logo, Button } from '../../utils/yandex-components'
+import styles from './app-header.module.css'
 
-const AppHeader = () => {
+import PropTypes from 'prop-types';
 
+const NavButton = ({title, icon}) => {
+    const Icon = icon;
     return (
-        <header className={`${AppHeaderStyles.header} pt-4 pb-4 text_type_main-default`}>
-            <nav className={AppHeaderStyles.menu}>
-                <span className={`${AppHeaderStyles.menu__item} pr-5 pl-5 mr-2`}>
-                    <BurgerIcon />
-                    <span className="ml-2">Конструктор</span>
-                </span>
-                <span className={`${AppHeaderStyles.menu__item} pr-5 pl-5`}>
-                    <ListIcon type="secondary" />
-                    <span className="ml-2 text_color_inactive">Лента заказов</span>
-                </span>
-            </nav>
-            <Logo />
-            <span className={`${AppHeaderStyles.profile} pr-5 pl-5`}>
-                <ProfileIcon type="secondary" />
-                <span className="ml-2 text_color_inactive">Личный кабинет</span>
-            </span>
-        </header>
-    );
+        <Button type="secondary" size="medium" className={styles.NavButton}>
+            <Icon type="primary" className={styles.NavButtonIcon}/>
+            <div className={`${styles.NavButtonTitle} text text_type_main-default`}>
+                {title}
+            </div>
+        </Button>
+    )
 }
+
+NavButton.propTypes = {
+    title: PropTypes.string.isRequired,
+    icon: PropTypes.func.isRequired
+}
+
+const AppHeader = () => (
+    <header className={styles.AppHeader}>
+        <NavButton title="Конструктор" icon={BurgerIcon}/>
+        <NavButton title="Лента заказов" icon={MenuIcon}/>
+        <Logo/>
+        <NavButton title="Личный кабинет" icon={ProfileIcon}/>
+    </header>
+)
 
 export default AppHeader;

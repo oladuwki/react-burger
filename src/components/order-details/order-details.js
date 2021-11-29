@@ -1,19 +1,30 @@
-import React from "react";
-import OrderDetailsStyles from './order-details.module.css';
-import iconDone from '../../images/done.svg'
+import styles from './order-details.module.css'
+import {} from '@ya.praktikum/react-developer-burger-ui-components';
+import orderSuccessImage from '../../images/done.svg'
+import PropTypes from 'prop-types'
 
-const OrderDetails = (props) => {
-    return (
-        <section className={`${OrderDetailsStyles.order_details} pt-20 pb-20`}>
-            <h1 className="text text_type_digits-large mb-8">034536</h1>
-            <p className="text text_type_main-medium">индефикатор заказа</p>
-            <span className="mt-15 mb-15">
-                <img src={iconDone} alt="Done icon" />
-            </span>
-            <p className="text text_type_main-small mb-2">Ваш заказ начали готовить</p>
-            <p className="text text_type_main-small text_color_inactive">Дождитесь готовности на орбитальной станции</p>
-        </section>
-    )
+const OrderDetails = ({No, success}) => (
+    <div className={styles.OrderDetails}>
+        <p className={`${styles.OrderNumber} text text_type_digits-large`}>{No}</p>
+        <p className="text text_type_main-medium">идентификатор заказа</p>
+        <p className={styles.ImageContainer}>
+            {
+                success && (<img alt="V" src={orderSuccessImage} className={styles.OrderSuccessImage}/>)
+            }
+        </p>
+        <p className="text text_type_main-small">Ваш заказ начали готовить</p>
+        <p className="text text_type_main-small text_color_inactive">Дождитесь готовности на орбитальной станции</p>
+    </div>
+)
+
+OrderDetails.defaultProps = {
+    No: 0,
+    success: false
+}
+
+OrderDetails.propTypes = {
+    No: PropTypes.number.isRequired,
+    success: PropTypes.bool.isRequired
 }
 
 export default OrderDetails;

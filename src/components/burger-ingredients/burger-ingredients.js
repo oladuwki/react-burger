@@ -1,136 +1,96 @@
-import React, { useState, useEffect } from "react";
-import { Counter, Tab, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import BurgerIngredientsStyles from './burger-ingredients.module.css';
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import PropTypes from 'prop-types';
-import ingredientObject from '../../utils/types.js';
+import Category from './category';
+import CategoryBar from './category-bar';
+import ingredientsStyles from './burger-ingredients.module.css';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 
+import { useDispatch, useSelector } from 'react-redux';
 
-const BurgerIngredients = (props) => {
-    const [current, setCurrent] = useState('one');
-    const [modalVisible, setModalVisible] = useState(false);
-    const [ingredientDetails, setIngredientDetails] = useState(null);
+import dictionary from '../../utils/dictionary.json'
+import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '../../services/actions/burger-ingredients';
+import { useEffect, useRef } from 'react';
 
-    const rolls = [];
-    const sauces = [];
-    const fillings = [];
+import { ADD_CATEGORY_ID } from '../../services/actions/burger-ingredients';
 
-    const showModal = (e) => {
-        let clickedIngredientId = e.currentTarget.getAttribute('id');
-        let clickedIngredientData = props.ingredients.find(item => item._id === clickedIngredientId);
+const getCategoryDescriptions = (ingredients) => {
+    const categories = [...new Set(ingredients.map(ingr => ingr.type))];
 
-        setModalVisible(true);
-        setIngredientDetails(clickedIngredientData);
-    }
-    
-    const closeModal = (e) => {
-        e.stopPropagation();
-        setModalVisible(false);
-    }
-
-    // Распределение ингредиентов по типу
-    props.ingredients.forEach((item) => {
-        if (item.type === 'bun') {
-            rolls.push(item);
+    const result = categories.map(type => {
+        if (dictionary[type]){
+            return {
+                code: type,
+                title: dictionary[type].ru
+            }
         }
-        if (item.type === 'main') {
-            fillings.push(item);
-        }
-        if (item.type === 'sauce') {
-            sauces.push(item);
+        return {
+            code: type,
+            title: type
         }
     });
 
-    // Массив булок
-    const rollsItems = rolls.map((item) => {
-        return (
-            <div key={item._id} id={item._id} className={BurgerIngredientsStyles.card} onClick={showModal}>
-                <Counter count={1} size="default" />
-                <img src={item.image} alt={item.name} className={BurgerIngredientsStyles.card__img} />
-                <div className={BurgerIngredientsStyles.card__price}>
-                    <p className="text_type_digits-default mr-1">{item.price}</p>
-                    <CurrencyIcon />
-                </div>
-                <p className="text_type_main-default">{item.name}</p>
-            </div>
-        )
-    });
+    return result;
+}
 
-    // Массив начинок
-    const fillingsItems = fillings.map((item) => {
-        return (
-            <div key={item._id} id={item._id} className={BurgerIngredientsStyles.card} onClick={showModal}>
-                <img src={item.image} alt={item.name} className={BurgerIngredientsStyles.card__img} />
-                <div className={BurgerIngredientsStyles.card__price}>
-                    <p className="text_type_digits-default mr-1">{item.price}</p>
-                    <CurrencyIcon />
-                </div>
-                <p className="text_type_main-default">{item.name}</p>
-            </div>
-        )
+const onIngredientsRendered = (descriptions, dispatch) => {
+    descriptions.forEach(desc => {
+        dispatch({
+            type: ADD_CATEGORY_ID,
+            id: desc.title
+        });
     });
+};
 
-    // Массив соусов
-    const saucesItems = sauces.map((item) => {
-        return (
-            <div key={item._id} id={item._id} className={BurgerIngredientsStyles.card} onClick={showModal}>
-                <img src={item.image} alt={item.name} className={BurgerIngredientsStyles.card__img} />
-                <div className={BurgerIngredientsStyles.card__price}>
-                    <p className="text_type_digits-default mr-1">{item.price}</p>
-                    <CurrencyIcon />
-                </div>
-                <p className="text_type_main-default">{item.name}</p>
-            </div>
-        )
-    });
+const BurgerIngredients = () => {
+    const dispatch = useDispatch();
+    const newIngredients = useSelector(store => store.ingredientsReducer.ingredients);
+    const current = useSelector(store => store.ingredientsReducer.currentIngredient);
+    const categoryDescriptions = getCategoryDescriptions(newIngredients);
+    const getCategoryTitles = () => categoryDescriptions.map(cat => cat.title);
+    const onCloseItem = () => dispatch({type: CLEAR_CURRENT_INGREDIENT})
+    useEffect(()=> { onIngredientsRendered(categoryDescriptions, dispatch)}, [categoryDescriptions, dispatch]);
 
     return (
-        <section className="pt-10">
-            <h1 className="text_type_main-large mb-5">Соберите бургер</h1>
-            <div className={`${BurgerIngredientsStyles.tabs} mb-10`}>
-                <Tab value="one" active={current === 'one'} onClick={setCurrent}>
-                    Булки
-                </Tab>
-                <Tab value="two" active={current === 'two'} onClick={setCurrent}>
-                    Соусы
-                </Tab>
-                <Tab value="three" active={current === 'three'} onClick={setCurrent}>
-                    Начинки
-                </Tab>
+        <section className={ingredientsStyles.ingredientsMenu}>
+            <CombineBurgerTitle/>
+            <div className={ingredientsStyles.menuContent}>
+                <CategoryBar titles={getCategoryTitles()}/>
+                <CategoriesContainer>
+                    {
+                        categoryDescriptions.map(desc => <Category key={desc.code} code={desc.code} title={desc.title}/>)
+                    }
+                </CategoriesContainer>
             </div>
-            <section className={BurgerIngredientsStyles.ingredients_scroll}>
-                <section id="rolls" className="mb-10">
-                    <h2 className="text_type_main-medium mb-6">Булки</h2>
-                    <section className={BurgerIngredientsStyles.ingredients}>
-                        {rollsItems}
-                    </section>
-                </section>
-                <section id="sauces" className="mb-10">
-                    <h2 className="text_type_main-medium mb-6">Соусы</h2>
-                    <section className={BurgerIngredientsStyles.ingredients}>
-                        {saucesItems}
-                    </section>
-                </section>
-                <section id="fillings" className="mb-10">
-                    <h2 className="text_type_main-medium mb-6">Начинки</h2>
-                    <section className={BurgerIngredientsStyles.ingredients}>
-                        {fillingsItems}
-                    </section>
-                </section>
-                {
-                    modalVisible ?
-                        <Modal title="Детали ингредиента" onClose={closeModal}>
-                            <IngredientDetails {...ingredientDetails} />
-                        </Modal> : ''
-                }
-            </section>
+            <Modal caption="Детали ингредиента" show={!!current._id} closeHandler={onCloseItem}>
+                <IngredientDetails/>
+            </Modal>
         </section>
+    )
+}
+
+const CategoriesContainer = (props) => {
+    const scrollableList = useRef(null);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        function handleNavigation(e) {
+            dispatch({
+                type: CHANGE_CURRENT_CATEGORY_BY_DISTANCE,
+                distance: scrollableList.current.getBoundingClientRect().y
+            });
+        }
+        scrollableList.current.addEventListener("scroll", handleNavigation);
+    }, [scrollableList, dispatch]);
+
+    return (
+        <div className={ingredientsStyles.categoryBlock} ref={scrollableList}>
+            { props.children }
+        </div>
     );
 }
 
-BurgerIngredients.propTypes = {
-    ingredients:  PropTypes.arrayOf(ingredientObject).isRequired
-};
+const CombineBurgerTitle = () => (
+    <p className={`${ingredientsStyles.title} text text_type_main-large`}>
+        Соберите бургер
+    </p>
+);
 
 export default BurgerIngredients;
