@@ -1,13 +1,4 @@
 .main {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.content {
-    width: 90%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+  margin: 0 auto;
+  max-width: 1194px;
 }

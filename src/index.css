@@ -1,11 +1,25 @@
-/* .input__container {
-    margin-top: 16px;
-} */
-
-.input__container .input__error {
-    margin-bottom: 0;
+/* Это фиксы для пакета @ya.praktikum/react-developer-burger-ui-components */
+.constructor-element__text {
+  width: 254px;
 }
 
-.input__container .input_size_default {
-    width: 30vw;
+
+.auth-form  .input__container { 
+  margin-bottom: 24px;
+}
+
+.auth-form button {
+  margin-bottom: 80px;
+}
+
+.auth-form .input__container .input {
+  width: 480px;
+}
+
+.profile-inputs .input__container {
+  margin-bottom: 24px;
+}
+
+.profile-inputs .input__container .input {
+  width: 480px;
 }
