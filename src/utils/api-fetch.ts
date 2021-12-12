@@ -1,12 +1,6 @@
 import { getCookie } from './cookie';
 import {
-  urlLoginRout,
-  urlLogoutRout,
-  urlUserDataEndpoint,
-  urlApiToken,
-  urlUserRegistration,
-  urlResetPassword,
-  urlSetNewPassword,
+  url
 } from './api-url';
 
 type TRegistrationData = {
@@ -16,7 +10,7 @@ type TRegistrationData = {
 }
 
 export function fetchUserRegistration(data: TRegistrationData) {
-  return fetch(urlUserRegistration, {
+  return fetch(`${url}/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
@@ -44,7 +38,7 @@ type TLogInData = {
 }
 
 export function fetchLogIn(data: TLogInData) {
-  return fetch(urlLoginRout, {
+  return fetch(`${url}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
@@ -66,7 +60,7 @@ export function fetchLogIn(data: TLogInData) {
 
 export function fetchRequestResetCode(userEmail: string) {
   console.log('body', JSON.stringify({ email: userEmail }))
-  return fetch(urlResetPassword, {
+  return fetch(`${url}/password-reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
@@ -87,7 +81,7 @@ export function fetchRequestResetCode(userEmail: string) {
 }
 
 export function fetchResetPassword(newPassword: string, resetCode: string) {
-  return fetch(urlSetNewPassword, {
+  return fetch(`${url}/password-reset/reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
@@ -111,7 +105,7 @@ export function fetchResetPassword(newPassword: string, resetCode: string) {
 }
 
 export function fetchGetUserData() {
-  return fetch(urlUserDataEndpoint, {
+  return fetch(`${url}/auth/user`, {
     headers: {
       method: 'GET',
       'Content-Type': 'application/json;charset=utf-8',
@@ -142,7 +136,7 @@ type TChangeUserDataArg = {
 }
 
 export function fetchChangeUserData(form: TChangeUserDataArg) {
-  return fetch(urlUserDataEndpoint, {
+  return fetch(`${url}/auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -172,7 +166,7 @@ export function fetchChangeUserData(form: TChangeUserDataArg) {
 
 export function fetchRefreshTokens() {
   console.log('начало фетча за рефрешем токенов')
-  return fetch(urlApiToken, {
+  return fetch(`${url}/auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -197,7 +191,7 @@ export function fetchRefreshTokens() {
 }
 
 export function fetchLogOut() {
-  return fetch(urlLogoutRout, {
+  return fetch(`${url}/auth/logout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'

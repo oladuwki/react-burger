@@ -1,23 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import indexStyles from './app.module.css';
 import { Route, Switch, useLocation, useHistory, } from 'react-router-dom';
-
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { Location } from 'history';
-
 import Modal from '../modal/modal';
 import IngredientDetais from '../ingridient-details/ingridient-details';
-import { useSelector } from 'react-redux';
-
+import {useDispatch, useSelector} from 'react-redux';
 import AppHeader from '../app-header/app-header';
 import BurgerVendor from '../burger-vendor/burger-vendor';
 import { LoginPage, RegistrationPage, ForgotPage, ResetPassword, ProfilePage, IngridientPage } from '../../pages';
+import {getIngridientsData} from "../../services/actions/burgerVendor";
+import {url} from "../../utils/api-url";
 
 type TLocationState = {
   background?: Location;
 };
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngridientsData(`${url}/ingredients`));
+  }, [dispatch]);
 
   const history = useHistory();
   let location = useLocation<TLocationState | undefined>();

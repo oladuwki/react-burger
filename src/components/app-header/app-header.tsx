@@ -10,17 +10,11 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import {
-  getIngridientsData,
-} from '../../services/actions/burgerVendor';
-import { urlApiGetIngridients } from '../../utils/api-url';
-
 function AppHeader() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(confirmAuth());
-    dispatch(getIngridientsData(urlApiGetIngridients));
   }, [dispatch]);
 
   return (

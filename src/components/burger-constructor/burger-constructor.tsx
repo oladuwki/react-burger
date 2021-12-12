@@ -22,7 +22,7 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { urlApiPostOrder } from '../../utils/api-url';
+import { url } from '../../utils/api-url';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -128,7 +128,7 @@ function BurgerConstructor() {
       return (history.push({ pathname: '/login' }));
     }
 
-    return dispatch(postBurgerOrder(urlApiPostOrder, createPostBody));
+    return dispatch(postBurgerOrder(`${url}/orders`, createPostBody));
   };
 
   return (

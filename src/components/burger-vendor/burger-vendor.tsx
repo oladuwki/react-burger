@@ -10,19 +10,12 @@ import OrderDetails from '../order-details/order-details';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import {
-  getIngridientsData,
-} from '../../services/actions/burgerVendor';
-
-import { urlApiGetIngridients } from '../../utils/api-url';
 
 function BurgerVendor() {
 
-  const dispatch = useDispatch();
-
-  const { modalIsVisible, currentModalType, ingrInModalData, arrOfIngridients, dataIsLoading, dataHasError } = useSelector((store: any) => ({
+  const { modalIsVisible, currentModalType, arrOfIngridients, dataIsLoading, dataHasError } = useSelector((store: any) => ({
     modalIsVisible: store.burgerVendor.modalIsVisible,
     currentModalType: store.burgerVendor.currentModalType,
     ingrInModalData: store.burgerVendor.ingrInModalData,
@@ -30,8 +23,6 @@ function BurgerVendor() {
     dataIsLoading: store.burgerVendor.ingridientsData.ingrDataIsLoading,
     dataHasError: store.burgerVendor.ingridientsData.ingrDataHasError,
   }));
-
-  useEffect(() => dispatch(getIngridientsData(urlApiGetIngridients)), [dispatch]);
 
   return (
     <>
