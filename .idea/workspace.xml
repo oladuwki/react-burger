@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="490a54c5-9037-4eb8-a33f-22aa5ef189ba" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/app-header/app-header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/app-header/app-header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/app/app.test.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/app/app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/app/app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/burger-constructor/burger-constructor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/burger-constructor/burger-constructor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/burger-vendor/burger-vendor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/burger-vendor/burger-vendor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/ingridient-page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ingridient-page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/api-fetch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api-fetch.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/api-url.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api-url.ts" afterDir="false" />
-    </list>
+    <list default="true" id="490a54c5-9037-4eb8-a33f-22aa5ef189ba" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,7 +44,7 @@
       <option name="presentableId" value="Default" />
       <updated>1639256454718</updated>
       <workItem from="1639256456757" duration="290000" />
-      <workItem from="1639301166385" duration="1528000" />
+      <workItem from="1639301166385" duration="1831000" />
     </task>
     <task id="LOCAL-00001" summary="sprint-4/step-1 &quot;changing the project for typeScript&quot;">
       <created>1639256703421</created>
@@ -63,7 +53,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639256703421</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="sprint-4/step-1 &quot;code refactor&quot;">
+      <created>1639302950066</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1639302950066</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -71,6 +68,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="sprint-4/step-1 &quot;changing the project for typeScript&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="sprint-4/step-1 &quot;changing the project for typeScript&quot;" />
+    <MESSAGE value="sprint-4/step-1 &quot;code refactor&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="sprint-4/step-1 &quot;code refactor&quot;" />
   </component>
 </project>
