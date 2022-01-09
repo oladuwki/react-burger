@@ -37,6 +37,16 @@ export const getCookie = (name: string): string | undefined => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
+export const getAccessTokenLiteral = (): string => {
+  let str = getCookie('accessToken');
+  if (str) {
+    str = str.split("Bearer ")[1]
+  } else {
+    str = '';
+  }
+  return str;
+}
+
 export function deleteCookie(name: string) {
   setCookie(name, null, { expires: -1 });
 }

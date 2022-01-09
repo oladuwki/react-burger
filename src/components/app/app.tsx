@@ -1,48 +1,56 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from "react";
 import indexStyles from './app.module.css';
 import { Route, Switch, useLocation, useHistory, } from 'react-router-dom';
+import { useAppDispatch } from '../../services/hooks';
+import { confirmAuthThunk } from '../../services/actions/userActions';
+import {
+  getIngridientsDataThunk,
+} from '../../services/actions/burgerVendor';
+import { urlApiGetIngridients } from '../../utils/api-url';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { Location } from 'history';
 import Modal from '../modal/modal';
 import IngredientDetais from '../ingridient-details/ingridient-details';
-import {useDispatch, useSelector} from 'react-redux';
+import { useAppSelector } from '../../services/hooks';
 import AppHeader from '../app-header/app-header';
 import BurgerVendor from '../burger-vendor/burger-vendor';
-import { LoginPage, RegistrationPage, ForgotPage, ResetPassword, ProfilePage, IngridientPage } from '../../pages';
-import {getIngridientsData} from "../../services/actions/burgerVendor";
-import {url} from "../../utils/api-url";
+import { FeedDetailedCard } from '../feed-detailed-card/feed-detailed-card';
+import { LoginPage, RegistrationPage, ForgotPage, ResetPassword, ProfilePage, FeedPage, IngridientPage, ProfileOrdersPage, OrderPage } from '../../pages';
 
 type TLocationState = {
-  background?: Location;
+  ingredientModal?: Location;
+  feedModal?: Location;
+  profileOrderModal?: Location;
 };
 
 function App() {
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngridientsData(`${url}/ingredients`));
-  }, [dispatch]);
-
   const history = useHistory();
   let location = useLocation<TLocationState | undefined>();
-  let background = location.state && location.state.background;
-  console.log('background', background);
 
-  const { modalIsVisible, ingrInModalData } = useSelector((store: any) => store.burgerVendor); // хранилище типизируем в следующем спринте
-  React.useEffect(() => {
-    history.replace({
-      state: { background: undefined },
-    });
-    // eslint-disable-next-line
-  }, []);
+  const action = history.action === 'PUSH' || history.action === 'REPLACE';
+
+  const modalIngredientOpen = action && location.state && location.state.ingredientModal;
+  const modalFeedOrderOpen = action && location.state && location.state.feedModal;
+  const modalProfileOrderOpen = action && location.state && location.state.profileOrderModal;
+
+  const { ingrInModalData } = useAppSelector((store) => store.burgerVendor);
+
+  const dispatch = useAppDispatch();
+
+  
+  useEffect(() => {
+    dispatch(confirmAuthThunk());
+    dispatch(getIngridientsDataThunk(urlApiGetIngridients));
+  }, [dispatch]);
 
   return (
     <>
       <AppHeader />
 
       <main className={indexStyles.main}>
-        <Switch location={background || location}>
+        <Switch location={modalIngredientOpen || modalFeedOrderOpen || modalProfileOrderOpen || location}>
+
           <Route path="/login">
             <LoginPage />
           </Route>
@@ -64,13 +72,12 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute path="/profile/orders" exact={true}>
-            /profile/orders — страница истории заказов пользователя. Доступен только авторизованным пользователям.
-            <br /><a href="/profile/orders/123">Страница заказа 123</a>
+            <ProfileOrdersPage />
+
           </ProtectedRoute>
 
           <ProtectedRoute path="/profile/orders/:id">
-            /profile/orders/:id — страница заказа в истории заказов. Доступен только авторизованным пользователям.
-
+            <OrderPage orderSource={'personalOrder'} />
           </ProtectedRoute>
 
           <Route path="/ingredients/:id">
@@ -78,11 +85,11 @@ function App() {
           </Route>
 
           <Route path="/feed" exact={true}>
-            /feed — страница ленты заказов. Доступен всем пользователям.
+            <FeedPage />
           </Route>
 
           <Route path="/feed/:id">
-            /feed/:id — страница заказа в ленте. Доступен всем пользователям.
+            <OrderPage orderSource={'feed'} />
           </Route>
 
           <Route path="/" exact={true}>
@@ -90,15 +97,30 @@ function App() {
           </Route>
         </Switch>
 
-        {background && (
+        {modalIngredientOpen && (
           <Route path="/ingredients/:id">
-            {modalIsVisible && (
               <Modal>
                 <IngredientDetais ingredientData={ingrInModalData} />
               </Modal>
-            )}
           </Route>
         )}
+        
+        {modalFeedOrderOpen && (
+          <Route path="/feed/:id">
+              <Modal>
+                <FeedDetailedCard />
+              </Modal>
+          </Route>
+        )}
+
+        {modalProfileOrderOpen && (
+          <ProtectedRoute path="/profile/orders/:id">
+              <Modal>
+                <FeedDetailedCard />
+              </Modal>
+          </ProtectedRoute>
+        )}
+
       </main>
     </>
   );

@@ -1,12 +1,14 @@
 import React from "react";
-import { useSelector } from 'react-redux';
 import IngridientCard from "../ingridient-card/ingrdient-card";
 import { TIngredientObjData, TIngredientType } from '../../utils/types';
+
+import { useAppSelector } from '../../services/hooks';
 
 type TCardListProps = { type: TIngredientType };
 
 const CardList: React.FC<TCardListProps> = ({ type }) => {
-    const arrOfIngridients = useSelector((store: any) => store.burgerVendor.ingridientsData.arrOfIngridients);
+
+    const arrOfIngridients = useAppSelector((store) => store.burgerVendor.ingridientsData.arrOfIngridients);
 
     const arrTargetedIngridients = arrOfIngridients.filter(function (obj: TIngredientObjData) {
         return obj.type === type;

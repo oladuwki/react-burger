@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="490a54c5-9037-4eb8-a33f-22aa5ef189ba" name="Changes" comment="" />
+    <list default="true" id="490a54c5-9037-4eb8-a33f-22aa5ef189ba" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,6 +47,7 @@
       <updated>1639256454718</updated>
       <workItem from="1639256456757" duration="290000" />
       <workItem from="1639301166385" duration="1831000" />
+      <workItem from="1639310769870" duration="1903000" />
     </task>
     <task id="LOCAL-00001" summary="sprint-4/step-1 &quot;changing the project for typeScript&quot;">
       <created>1639256703421</created>

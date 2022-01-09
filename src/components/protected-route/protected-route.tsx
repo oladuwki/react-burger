@@ -1,11 +1,12 @@
-import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector } from '../../services/hooks';
 import { RouteProps } from 'react-router';
 
 export function ProtectedRoute({ children, ...rest }: RouteProps) {
 
-  const { isLoggedIn } = useSelector( (store: any) => store.user);
+  const { isLoggedIn, userChecked } = useAppSelector((store) => store.user);
+
+  if (localStorage.getItem('refreshToken') && !userChecked) return null;
 
   return (
     <Route {...rest} render={({ location }) =>

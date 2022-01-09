@@ -1,20 +1,27 @@
 import React, { FC, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import modalStyles from './modal.module.css';
 import ModalOverlay from './modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
-import { useDispatch } from 'react-redux';
 import {
     CLOSE_MODAL,
     SET_MODAL_TYPE,
 } from '../../services/actions/burgerVendor';
 
+type TLocationState = {
+    background?: Location;
+};
+
 const Modal: FC = ({ children }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const history = useHistory();
+    const location = useLocation<TLocationState | undefined>();
+    const currentModalType = useAppSelector(state => state.burgerVendor.currentModalType);
+
     const modalRoot = document.getElementById("react-modals") as HTMLElement;
 
     const stopPropagation = (event: React.MouseEvent<HTMLElement>) => {
@@ -31,9 +38,13 @@ const Modal: FC = ({ children }) => {
             value: 'none',
         });
 
-        history.replace({
-            pathname: `/`,
-        });
+        if (currentModalType === 'OrderDetails') {
+            return history.push({
+                state: { background: location },
+            })
+        }
+
+        history.goBack();
     }
 
     useEffect(() => {
@@ -49,6 +60,7 @@ const Modal: FC = ({ children }) => {
     return ReactDOM.createPortal(
         (
             <ModalOverlay handleClick={handleClose} >
+
                 <article className={modalStyles.modal} onClick={stopPropagation}>
                     <button onClick={handleClose} className={modalStyles.closeButton}>
                         <CloseIcon type="primary" />

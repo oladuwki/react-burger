@@ -1,21 +1,15 @@
-import React, { useEffect } from 'react';
-import styles from './burger-vendor.module.css';
-
+import s from './burger-vendor.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
-import IngredientDetais from '../ingridient-details/ingridient-details';
 import OrderDetails from '../order-details/order-details';
-
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-
-import { useSelector } from 'react-redux';
-
+import { useAppSelector } from '../../services/hooks';
 
 function BurgerVendor() {
 
-  const { modalIsVisible, currentModalType, arrOfIngridients, dataIsLoading, dataHasError } = useSelector((store: any) => ({
+  const { modalIsVisible, currentModalType, arrOfIngridients, dataIsLoading, dataHasError } = useAppSelector((store) => ({
     modalIsVisible: store.burgerVendor.modalIsVisible,
     currentModalType: store.burgerVendor.currentModalType,
     ingrInModalData: store.burgerVendor.ingrInModalData,
@@ -26,12 +20,12 @@ function BurgerVendor() {
 
   return (
     <>
-      <section className={styles.headerSection}>
+      <section className={s.headerSection}>
         <h1 className="text text_type_main-large">Соберите бургер</h1>
       </section>
 
-      <section className={styles.constructorContainer}>
-        {!dataIsLoading && !dataHasError && !!arrOfIngridients.length && (
+      <section className={s.constructorContainer}>
+        {!dataIsLoading && !dataHasError && !!arrOfIngridients && !!arrOfIngridients.length && (
           <>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
