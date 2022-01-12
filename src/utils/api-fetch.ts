@@ -15,7 +15,7 @@ type TRegistrationData = {
   'name': string,
 }
 
-async function checkResponse(res: { ok: any; json: () => any; }) {
+export async function checkResponse(res: Response) {
   if (res.ok) {
     return res.json();
   }

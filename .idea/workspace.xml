@@ -2,34 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="187dff25-8885-44c8-9a0c-f236f7025338" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/app-header/app-header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/app-header/app-header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/app/app.test.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/app/app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/app/app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/burger-constructor/burger-constructor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/burger-constructor/burger-constructor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/burger-ingredients/burger-ingredients.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/burger-ingredients/burger-ingredients.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/burger-vendor/burger-vendor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/burger-vendor/burger-vendor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/draggable-item/draggable-item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/draggable-item/draggable-item.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/feed-card/feed-card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/feed-card/feed-card.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/feed-detailed-card/feed-detailed-card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/feed-detailed-card/feed-detailed-card.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ingridient-card/ingrdient-card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ingridient-card/ingrdient-card.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ingridient-details/ingridient-details.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ingridient-details/ingridient-details.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/loader/loader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/loader/loader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/modal/modal-overlay/modal-overlay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modal/modal-overlay/modal-overlay.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/modal/modal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modal/modal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/order-details/order-details.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/order-details/order-details.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile-menu/profile-menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile-menu/profile-menu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile-tab/profile-tab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile-tab/profile-tab.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/scrollable-list/scrollable-list.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/scrollable-list/scrollable-list.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/feed.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/feed.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/forgot-password.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/forgot-password.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/orders.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/orders.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/registration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/registration.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/reset-password.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/reset-password.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/hooks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/hooks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/actions/burgerVendor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/actions/burgerVendor.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/api-fetch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/api-fetch.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +39,17 @@
     <property name="ts.external.directory.path" value="C:\Users\Nikita\Desktop\react-burger\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.start">
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -77,6 +63,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.start" />
+        <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
   </component>
@@ -88,7 +75,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1641998152679</updated>
-      <workItem from="1641998156347" duration="2023000" />
+      <workItem from="1641998156347" duration="5831000" />
     </task>
     <servers />
   </component>

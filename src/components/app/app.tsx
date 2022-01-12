@@ -27,7 +27,7 @@ type TLocationState = {
 function App() {
 
   const history = useHistory();
-  let location = useLocation<TLocationState | undefined>();
+  const location = useLocation<TLocationState | undefined>();
 
   const action = history.action === 'PUSH' || history.action === 'REPLACE';
 

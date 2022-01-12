@@ -30,22 +30,9 @@ const Modal: FC = ({ children }) => {
     }
 
     const handleClose = () => {
-        dispatch({
-            type: CLOSE_MODAL,
-        });
-
-        dispatch({
-            type: SET_MODAL_TYPE,
-            value: 'none',
-        });
-
-        if (currentModalType === 'OrderDetails') {
-            return history.push({
-                state: { background: location },
-            })
-        }
-
-        history.goBack();
+        return history.push({
+            state: { background: location },
+        })
     }
 
     useEffect(() => {
