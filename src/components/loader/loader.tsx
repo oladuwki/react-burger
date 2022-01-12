@@ -1,4 +1,3 @@
-// @ts-ignore
 import s from './loader.module.css';
 
 export const Loader = () => {

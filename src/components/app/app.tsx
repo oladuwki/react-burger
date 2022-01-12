@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-// @ts-ignore
+
 import indexStyles from './app.module.css';
 import { Route, Switch, useLocation, useHistory, } from 'react-router-dom';
 import { useAppDispatch } from '../../services/hooks';

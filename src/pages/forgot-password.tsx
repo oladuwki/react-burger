@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-// @ts-ignore
+
 import styles from './auth-form.module.css';
 import { Link, Redirect } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../services/hooks';

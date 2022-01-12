@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../services/hooks';
-// @ts-ignore
+
 import styles from './auth-form.module.css';
 import { Link, Redirect } from 'react-router-dom';
 import { confirmAuthThunk, registerNewUserThunk } from '../services/actions/userActions';

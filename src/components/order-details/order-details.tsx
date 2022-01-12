@@ -1,5 +1,4 @@
 import { FC } from 'react';
-// @ts-ignore
 import stylesOD from './order-details.module.css';
 import { useAppSelector } from '../../services/hooks';
 

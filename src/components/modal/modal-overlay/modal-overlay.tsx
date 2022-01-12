@@ -1,5 +1,4 @@
 import { FC } from 'react';
-// @ts-ignore
 import stylesMO from './modal-overlay.module.css';
 
 type TModalOverlayProps = {

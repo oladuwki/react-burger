@@ -4,7 +4,7 @@ import { ScrollableList } from '../components/scrollable-list/scrollable-list';
 import { wsActions } from '../services/actions/wsActions';
 import { TOrder } from '../utils/types';
 import { wsAllOrders } from '../utils/api-url';
-// @ts-ignore
+
 import s from './feed.module.css';
 
 export function FeedPage() {
