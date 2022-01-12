@@ -1,3 +1,4 @@
+// @ts-ignore
 import s from './burger-vendor.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';

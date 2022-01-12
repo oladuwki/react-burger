@@ -1,6 +1,7 @@
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { useHistory, useLocation } from 'react-router-dom';
 
+// @ts-ignore
 import s from './feed-card.module.css';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TOrder, TIngredientObjData } from '../../utils/types';

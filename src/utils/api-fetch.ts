@@ -15,6 +15,14 @@ type TRegistrationData = {
   'name': string,
 }
 
+async function checkResponse(res: { ok: any; json: () => any; }) {
+  if (res.ok) {
+    return res.json();
+  }
+  const response = await res.json();
+  return Promise.reject(response);
+}
+
 export function fetchUserRegistration(data: TRegistrationData) {
   return fetch(urlUserRegistration, {
     method: 'POST',
@@ -23,13 +31,7 @@ export function fetchUserRegistration(data: TRegistrationData) {
     },
     body: JSON.stringify(data), // email, password, name
   })
-    .then(async (res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      const response = await res.json();
-      return Promise.reject(response);
-    })
+    .then(checkResponse)
     .then((res) => {
       return res;
     })
@@ -48,12 +50,7 @@ export function fetchLogIn(data: TLogInData) {
     },
     body: JSON.stringify(data),
   })
-    .then(async (res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(await res.json());
-    })
+    .then(checkResponse)
     .then((res) => {
       return res;
     })
@@ -67,12 +64,7 @@ export function fetchRequestResetCode(userEmail: string) {
     },
     body: JSON.stringify({ email: userEmail }),
   })
-    .then(async (res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(await res.json());
-    })
+    .then(checkResponse)
     .then((res) => {
       return res;
     })
@@ -89,12 +81,7 @@ export function fetchResetPassword(newPassword: string, resetCode: string) {
       "token": resetCode
     }),
   })
-    .then(async (res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(await res.json());
-    })
+    .then(checkResponse)
     .then((res) => {
       return res;
     })
@@ -109,12 +96,7 @@ export function fetchGetUserData() {
       authorization: getCookie('accessToken') as string,
     },
   })
-    .then(async (res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(await res.json());
-    })
+    .then(checkResponse)
     .then((res) => {
       if (res["success"] === false) {
       }
@@ -142,12 +124,7 @@ export function fetchChangeUserData(form: TChangeUserDataArg) {
       "password": form.password,
     })
   })
-    .then(async (res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(await res.json());
-    })
+    .then(checkResponse)
     .then((res) => {
       if (res["success"] === false) {
       }
@@ -163,12 +140,7 @@ export function fetchRefreshTokens() {
     },
     body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
   })
-    .then(async (res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(await res.json());
-    })
+    .then(checkResponse)
     .then((res) => {
       if (res["success"] === false) {
         return false;
@@ -185,12 +157,7 @@ export function fetchLogOut() {
     },
     body: JSON.stringify({ token: localStorage.getItem('refreshToken'), }),
   })
-    .then(async (res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(await res.json());
-    })
+    .then(checkResponse)
     .then((res) => {
       if (res["success"] === false) {
       }

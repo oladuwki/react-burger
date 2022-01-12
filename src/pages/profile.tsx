@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../services/hooks';
 import { confirmAuthThunk, patchUserDataThunk } from '../services/actions/userActions';
+// @ts-ignore
 import styles from './profile.module.css';
 import { ProfileMenu } from '../components/profile-menu/profile-menu';
 

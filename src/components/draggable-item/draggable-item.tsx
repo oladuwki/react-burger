@@ -1,4 +1,5 @@
 import React from "react";
+// @ts-ignore
 import diStyles from "./draggable-item.module.css";
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { useDrag, useDrop } from "react-dnd";

@@ -1,4 +1,5 @@
 import { useState, FC } from 'react';
+// @ts-ignore
 import styles from './profile-menu.module.css';
 import { ProfileTab } from '../profile-tab/profile-tab';
 import { useHistory } from 'react-router-dom';

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useState } from "react";
 import { useCallback } from "react";
+// @ts-ignore
 import s from "./burger-constructor.module.css";
 import DraggableItem from "../draggable-item/draggable-item";
 import { useDrop } from "react-dnd";

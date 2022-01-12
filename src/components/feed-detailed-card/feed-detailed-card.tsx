@@ -1,3 +1,4 @@
+// @ts-ignore
 import s from './feed-detailed-card.module.css';
 import { useAppSelector } from '../../services/hooks';
 import { getOrderStatus, getPrice, getCompletedIngrList, getFormattedDate } from '../../utils/utils';

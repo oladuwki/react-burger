@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+// @ts-ignore
 import cardStyles from "./ingridient-card.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, DragPreviewImage } from "react-dnd";

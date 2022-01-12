@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+// @ts-ignore
 import ingrStyles from "./burger-ingredients.module.css";
 import CardList from "../ingridients-cardlist/ingridients-cardlist";
 

@@ -2,6 +2,7 @@ import React, { FC, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useHistory, useLocation } from 'react-router-dom';
 
+// @ts-ignore
 import modalStyles from './modal.module.css';
 import ModalOverlay from './modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';

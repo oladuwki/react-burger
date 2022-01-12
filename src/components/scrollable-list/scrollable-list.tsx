@@ -1,5 +1,6 @@
 import { useAppSelector } from '../../services/hooks';
 import { FeedCard } from '../feed-card/feed-card';
+// @ts-ignore
 import s from './scrollable-list.module.css';
 import { TOrder } from '../../utils/types';
 
