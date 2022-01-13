@@ -1,4 +1,4 @@
-import React from 'react';
+
 import stylesID from './ingridient-details.module.css';
 import { TIngredientObjData } from '../../utils/types';
 

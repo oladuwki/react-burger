@@ -1,8 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
+
 import styles from './auth-form.module.css';
 import { Link, Redirect, useLocation } from 'react-router-dom';
-import { logInApp, confirmAuth } from '../services/actions/userActions';
-import { useSelector, useDispatch } from 'react-redux';
+import { logInAppThunk, confirmAuthThunk } from '../services/actions/userActions';
+
+import { useAppDispatch, useAppSelector } from '../services/hooks';
+
 import {
   Input,
   PasswordInput,
@@ -11,14 +14,13 @@ import {
 
 export function LoginPage() {
   const [form, setFormValues] = useState({ email: '', password: '' });
-  const { isLoggedIn } = useSelector((store: any): any => store.user); // TODO: типизируем в следующем спринте
-  const dispatch = useDispatch();
+  const { isLoggedIn } = useAppSelector((store) => store.user); // TODO: типизируем в следующем спринте
+  const dispatch = useAppDispatch();
 
   const location = useLocation<{ from: Location }>();
 
   useEffect(() => {
-    console.log('Auth in /login');
-    dispatch(confirmAuth());
+    dispatch(confirmAuthThunk());
   }, [dispatch]);
 
   useEffect(() => {
@@ -35,10 +37,7 @@ export function LoginPage() {
   const handleSubmit = useCallback(
     e => { 
       e.preventDefault();
-      console.log('Sending login request');
-      console.log(form);
-
-      dispatch(logInApp(form));
+      dispatch(logInAppThunk(form));
     },
     [form, dispatch]
   );
@@ -58,18 +57,22 @@ export function LoginPage() {
           value={form.email}
           name={'email'}
           onChange={handleChange}
+
           error={false}
           errorText={'Введите корректный e-mail'}
         />
+
         <PasswordInput
           value={form.password}
           name={'password'}
           size={'default'}
           onChange={handleChange}
         />
+
         <Button type="primary" size="medium">
           Войти
         </Button>
+
         <p className="text text_type_main-default text_color_inactive">
           Вы — новый пользователь?{" "}
           <Link to={"/registration"} className={"text_color_link"}>
@@ -82,6 +85,7 @@ export function LoginPage() {
             Восстановить пароль
           </Link>
         </p>
+
       </form>
     </div>
   );

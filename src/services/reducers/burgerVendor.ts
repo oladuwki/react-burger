@@ -1,4 +1,7 @@
-import update from "immutability-helper"; // этот пакет для ресортировки массива, хранящегося в стейте
+import update from "immutability-helper";
+import { TBurgerVendorActionsUnion } from '../actions/burgerVendor';
+
+import { TOrderData, TDraggableIngr, TIngredientObjData, TModalType } from '../../utils/types';
 
 import {
     TOGGLE_MODAL_VISIBILITY,
@@ -16,27 +19,66 @@ import {
     UPDATE_DRAGGABLE_INGRIDIENTS,
     REMOVE_ALL_INGRIDIENTS,
     RESORT_DRAGGABLE_INGRIDIENTS,
+    SET_CONSTRUCTOR_LOADER,
 } from '../actions/burgerVendor';
 
+export type TBurgerVendorReducer = {
+    ingridientsData: {
+        arrOfIngridients: Array<TIngredientObjData>,
+        ingrDataIsLoading: boolean,
+        ingrDataHasError: boolean,
+    }
+    bun: TIngredientObjData,
+    draggableIngridients: Array<TDraggableIngr>,
 
-const initialState = {
+    modalIsVisible: boolean,
+    currentModalType: TModalType,
+    ingrInModalData: TIngredientObjData,
+    orderData: TOrderData,
+    constructorLoaderIsVisible: boolean,
+
+}
+
+export const blankIngr: TIngredientObjData  = {
+    _id: '',
+    name: '',
+    type: 'main',
+    proteins: 0,
+    fat: 0,
+    carbohydrates: 0,
+    calories: 0,
+    price: 0,
+    image: '',
+    image_mobile: '',
+    image_large: '',
+    __v: 0,
+}
+
+const initialState: TBurgerVendorReducer = {
     ingridientsData: {
         arrOfIngridients: [],
         ingrDataIsLoading: false,
         ingrDataHasError: false,
     },
 
-    bun: {},
+    bun: blankIngr,
     draggableIngridients: [],
 
     modalIsVisible: false,
     currentModalType: 'none',
-    ingrInModalData: {},
+    ingrInModalData: blankIngr,
 
-    orderData: {},
+    orderData: {
+        success: false,
+        name: '',
+        order: {
+            number: '',
+        },
+    },
+    constructorLoaderIsVisible: false,
 };
 
-export const burgerVendorReducer = (state = initialState, action) => {
+export const burgerVendorReducer = (state = initialState, action: TBurgerVendorActionsUnion): TBurgerVendorReducer => {
     switch (action.type) {
         case TOGGLE_MODAL_VISIBILITY: {
             return {
@@ -57,7 +99,6 @@ export const burgerVendorReducer = (state = initialState, action) => {
             }
         }
         case SET_ORDER_STATE: {
-            console.log('SET_ORDER_STATE: ', action.value)
             return {
                 ...state,
                 orderData: action.value,
@@ -77,9 +118,9 @@ export const burgerVendorReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ingridientsData: {
-                    ingridientsData: [],
-                    isLoading: false,
-                    hasError: true
+                    arrOfIngridients: [],
+                    ingrDataIsLoading: false,
+                    ingrDataHasError: true
                 },
             }
         }
@@ -109,7 +150,7 @@ export const burgerVendorReducer = (state = initialState, action) => {
         }
         case ADD_SAUCE: {
             const instanceID = (new Date()).getTime();
-            const objIngridientWithId = { ...action.value, instanceID };
+            const objIngridientWithId: TDraggableIngr = { ...action.value, instanceID };
             return {
                 ...state,
                 draggableIngridients: state.draggableIngridients.concat(objIngridientWithId)
@@ -144,8 +185,14 @@ export const burgerVendorReducer = (state = initialState, action) => {
         case REMOVE_ALL_INGRIDIENTS: {
             return {
                 ...state,
-                bun: {},
+                bun: blankIngr,
                 draggableIngridients: []
+            }
+        }
+        case SET_CONSTRUCTOR_LOADER: {
+            return {
+                ...state,
+                constructorLoaderIsVisible: action.value,
             }
         }
         default: {

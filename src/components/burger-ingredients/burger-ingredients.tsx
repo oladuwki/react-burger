@@ -1,4 +1,4 @@
-import React, { LegacyRef, useRef } from "react";
+import React, { useRef } from "react";
 import ingrStyles from "./burger-ingredients.module.css";
 import CardList from "../ingridients-cardlist/ingridients-cardlist";
 
@@ -7,12 +7,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { TIngredientType } from '../../utils/types';
-
-type TBunRef = {
-    'bun': LegacyRef<HTMLDivElement>,
-    'sauce': LegacyRef<HTMLDivElement>,
-    'main': LegacyRef<HTMLDivElement>,
-}
 
 function BurgerIngredients() {
 
@@ -52,7 +46,6 @@ function BurgerIngredients() {
         const bunHeaderPosition = bunRef.current ? bunRef.current.getBoundingClientRect().top : 0;
         const sauceHeaderPosition = sauceRef.current ? sauceRef.current.getBoundingClientRect().top : 0;
         const mainHeaderPosition = mainRef.current ? mainRef.current.getBoundingClientRect().top : 0;
-
         const bunDiff = Math.abs(scrollContainerPosition - bunHeaderPosition);
         const sauceDiff = Math.abs(scrollContainerPosition - sauceHeaderPosition);
         const mainDiff = Math.abs(scrollContainerPosition - mainHeaderPosition);

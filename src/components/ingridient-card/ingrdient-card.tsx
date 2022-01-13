@@ -1,22 +1,24 @@
 import React, { useEffect } from "react";
+
 import cardStyles from "./ingridient-card.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, DragPreviewImage } from "react-dnd";
 import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../services/hooks';
+
 import {
     OPEN_MODAL,
     SET_MODAL_TYPE,
     SET_INGRIDIENT_IN_MODAL,
 } from '../../services/actions/burgerVendor';
-import { TIngredientObjData, TIngredientInStore } from '../../utils/types';
+import { TIngredientObjData, TIngredientInStore, TDraggableIngr } from '../../utils/types';
 
 type TIngridientCardProps = {
     objIngridient: TIngredientObjData
 };
 
 const IngridientCard: React.FC<TIngridientCardProps> = ({ objIngridient }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const history = useHistory();
     const location = useLocation();
 
@@ -46,34 +48,39 @@ const IngridientCard: React.FC<TIngridientCardProps> = ({ objIngridient }) => {
     const handleClick = () => {
         openIngridientDetails();
 
-        history.replace({
+        history.push({
             pathname: `/ingredients/${objIngridient._id}`,
-            state: { background: location },
+            state: { ingredientModal: location },
         });
     };
 
     const [ingrCounter, setIngrCounter] = React.useState<number>();
 
-    const { ingrInConstructor } = useSelector((state: any): any => {
+    const bunInConstructor: TIngredientObjData | undefined = useAppSelector((state) => {
         if (objIngridient.type === 'bun') {
-            return ({ ingrInConstructor: state.burgerVendor.bun });
+            return state.burgerVendor.bun ;
         }
+        return undefined;
+    });
+
+    const draggableIngrInConstructor: TDraggableIngr[] | undefined = useAppSelector((state) => {
         if (objIngridient.type === 'sauce' || objIngridient.type === 'main') {
-            return ({ ingrInConstructor: state.burgerVendor.draggableIngridients });
+            return state.burgerVendor.draggableIngridients ;
         }
-    })
+        return undefined;
+    });
 
     function getNumOfIngridients(): number {
         let counterValue = 0;
 
         if (objIngridient.type === 'bun') {
-            if (ingrInConstructor._id === objIngridient._id) {
+            if (bunInConstructor && (bunInConstructor._id === objIngridient._id) ) {
                 return 2;
             }
         }
 
-        if (objIngridient.type === 'sauce' || objIngridient.type === 'main') {
-            ingrInConstructor.forEach((item: TIngredientInStore) => {
+        if (draggableIngrInConstructor && (objIngridient.type === 'sauce' || objIngridient.type === 'main')) {
+            draggableIngrInConstructor.forEach((item: TIngredientInStore) => {
                 if (item._id === objIngridient._id) {
                     counterValue++;
                 }
@@ -86,9 +93,7 @@ const IngridientCard: React.FC<TIngridientCardProps> = ({ objIngridient }) => {
     useEffect(() => {
         setIngrCounter(getNumOfIngridients());
         // eslint-disable-next-line
-    }, [ingrInConstructor, objIngridient]);
-
-    /**************************************************** */
+    }, [bunInConstructor, draggableIngrInConstructor, objIngridient]);
 
     return (
         <>
