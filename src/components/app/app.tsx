@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import indexStyles from './app.module.css';
 import { Route, Switch, useLocation, useHistory, } from 'react-router-dom';
 import { useAppDispatch } from '../../services/hooks';
 import { confirmAuthThunk } from '../../services/actions/userActions';
 import {
-  getIngridientsDataThunk,
+  CLOSE_MODAL,
+  getIngridientsDataThunk, SET_MODAL_TYPE,
 } from '../../services/actions/burgerVendor';
 import { urlApiGetIngridients } from '../../utils/api-url';
 import { ProtectedRoute } from '../protected-route/protected-route';
@@ -34,17 +35,38 @@ function App() {
   const modalIngredientOpen = action && location.state && location.state.ingredientModal;
   const modalFeedOrderOpen = action && location.state && location.state.feedModal;
   const modalProfileOrderOpen = action && location.state && location.state.profileOrderModal;
-
   const { ingrInModalData } = useAppSelector((store) => store.burgerVendor);
+  const currentModalType = useAppSelector(state => state.burgerVendor.currentModalType);
 
   const dispatch = useAppDispatch();
 
+  const handleClose = () => {
+    dispatch({
+      type: CLOSE_MODAL,
+    });
+
+    dispatch({
+      type: SET_MODAL_TYPE,
+      value: 'none',
+    });
+
+    if (currentModalType === 'OrderDetails') {
+      return history.push({
+        // pathname: `/`,
+        state: { background: location },
+      })
+    }
+
+    history.goBack();
+  }
   
   useEffect(() => {
     dispatch(confirmAuthThunk());
     dispatch(getIngridientsDataThunk(urlApiGetIngridients));
   }, [dispatch]);
 
+
+  // @ts-ignore
   return (
     <>
       <AppHeader />
@@ -94,29 +116,29 @@ function App() {
           </Route>
 
           <Route path="/" exact={true}>
-            <BurgerVendor />
+            <BurgerVendor handleClose = {handleClose} />
           </Route>
         </Switch>
 
         {modalIngredientOpen && (
           <Route path="/ingredients/:id">
-              <Modal>
+              <Modal handleClose = {handleClose}>
                 <IngredientDetais ingredientData={ingrInModalData} />
               </Modal>
           </Route>
         )}
         
         {modalFeedOrderOpen && (
-          <Route path="/feed/:id">
-              <Modal>
-                <FeedDetailedCard />
-              </Modal>
-          </Route>
+              <Route path="/feed/:id">
+                <Modal handleClose={handleClose}>
+                  <FeedDetailedCard />
+                </Modal>
+              </Route>
         )}
 
         {modalProfileOrderOpen && (
           <ProtectedRoute path="/profile/orders/:id">
-              <Modal>
+            <Modal handleClose = {handleClose}>
                 <FeedDetailedCard />
               </Modal>
           </ProtectedRoute>
