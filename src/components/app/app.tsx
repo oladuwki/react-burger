@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from "react";
-
+import React, { useEffect } from "react";
+//import logo from '../../images/logo.svg';
 import indexStyles from './app.module.css';
 import { Route, Switch, useLocation, useHistory, } from 'react-router-dom';
 import { useAppDispatch } from '../../services/hooks';
@@ -28,15 +28,15 @@ type TLocationState = {
 function App() {
 
   const history = useHistory();
-  const location = useLocation<TLocationState | undefined>();
+  let location = useLocation<TLocationState | undefined>();
 
-  const action = history.action === 'PUSH' || history.action === 'REPLACE';
+  const action = history.action === 'PUSH' || history.action === 'REPLACE'; //  history.action is mutable and automatically updates as the location changes. https://github.com/remix-run/history/blob/main/docs/api-reference.md 
 
   const modalIngredientOpen = action && location.state && location.state.ingredientModal;
   const modalFeedOrderOpen = action && location.state && location.state.feedModal;
   const modalProfileOrderOpen = action && location.state && location.state.profileOrderModal;
-  const { ingrInModalData } = useAppSelector((store) => store.burgerVendor);
   const currentModalType = useAppSelector(state => state.burgerVendor.currentModalType);
+  const { ingrInModalData } = useAppSelector((store) => store.burgerVendor); // хранилище типизируем в следующем спринте
 
   const dispatch = useAppDispatch();
 
@@ -52,7 +52,6 @@ function App() {
 
     if (currentModalType === 'OrderDetails') {
       return history.push({
-        // pathname: `/`,
         state: { background: location },
       })
     }
@@ -65,8 +64,6 @@ function App() {
     dispatch(getIngridientsDataThunk(urlApiGetIngridients));
   }, [dispatch]);
 
-
-  // @ts-ignore
   return (
     <>
       <AppHeader />
@@ -101,6 +98,7 @@ function App() {
 
           <ProtectedRoute path="/profile/orders/:id">
             <OrderPage orderSource={'personalOrder'} />
+
           </ProtectedRoute>
 
           <Route path="/ingredients/:id">
@@ -121,27 +119,27 @@ function App() {
         </Switch>
 
         {modalIngredientOpen && (
-          <Route path="/ingredients/:id">
+            <Route path="/ingredients/:id">
               <Modal handleClose = {handleClose}>
                 <IngredientDetais ingredientData={ingrInModalData} />
               </Modal>
-          </Route>
+            </Route>
         )}
-        
+
         {modalFeedOrderOpen && (
-              <Route path="/feed/:id">
-                <Modal handleClose={handleClose}>
-                  <FeedDetailedCard />
-                </Modal>
-              </Route>
+            <Route path="/feed/:id">
+              <Modal handleClose={handleClose}>
+                <FeedDetailedCard />
+              </Modal>
+            </Route>
         )}
 
         {modalProfileOrderOpen && (
-          <ProtectedRoute path="/profile/orders/:id">
-            <Modal handleClose = {handleClose}>
+            <ProtectedRoute path="/profile/orders/:id">
+              <Modal handleClose = {handleClose}>
                 <FeedDetailedCard />
               </Modal>
-          </ProtectedRoute>
+            </ProtectedRoute>
         )}
 
       </main>

@@ -1,5 +1,4 @@
 import React from "react";
-
 import headerStyles from "./app-header.module.css";
 
 import { Link } from 'react-router-dom';
@@ -10,9 +9,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-
 function AppHeader() {
-
   return (
     <header className={headerStyles.header}>
       <div className={headerStyles.headerContainer}>

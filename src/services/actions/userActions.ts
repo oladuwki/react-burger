@@ -105,6 +105,7 @@ export const logInAppThunk: AppThunk = (data: TLoginForm) => {
 export const logOutThunk: AppThunk = () => {
 
   return function (dispatch: AppDispatch) {
+
     fetchLogOut()
       .then((res) => {
         if (res.success === true) {
@@ -129,7 +130,6 @@ export const logOutThunk: AppThunk = () => {
 export const requestResetCodeThunk: AppThunk = (email: string) => {
 
   return function (dispatch: AppDispatch) {
-
     fetchRequestResetCode(email)
       .then(res => {
 
@@ -137,12 +137,10 @@ export const requestResetCodeThunk: AppThunk = (email: string) => {
           dispatch({
             type: ALLOW_RESET_PASSWORD,
           });
-
           setCookie('canResetPassword', 'yes', { expires: 60 * 60 * 1 });
         }
       })
       .catch(err => {
-
       })
   }
 }
@@ -169,7 +167,6 @@ export const setNewPasswordThunk: AppThunk = (newPassword: string, resetCode: st
 export const patchUserDataThunk: AppThunk = (form: TUserForm, setFormValues) => {
 
   return function (dispatch: AppDispatch) {
-
     fetchChangeUserData(form)
       .then(res => {
 
@@ -205,8 +202,6 @@ export const getUserThunk: AppThunk = (safetyCounter: number) => {
   safetyCounter++;
   if (safetyCounter > 2) {
     return function () {
-
-
     }
   }
 
@@ -224,8 +219,10 @@ export const getUserThunk: AppThunk = (safetyCounter: number) => {
       })
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          dispatch(refreshAccessTokenThunk(safetyCounter));
+          dispatch(refreshAccessTokenThunk(safetyCounter)); // сюда пробрасываем safetyCounter
+        } else {
         }
+
       });
   }
 }
@@ -247,6 +244,7 @@ export const confirmAuthThunk: AppThunk = () => {
       dispatch(refreshAccessTokenThunk(safetyCounter));
       return 'has refreshed tokens, than logged in';
     }
+
   }
 }
 

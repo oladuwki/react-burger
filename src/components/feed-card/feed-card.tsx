@@ -43,11 +43,10 @@ export function FeedCard({ orderData, isPersonal }: TFeedCard) {
   }
 
   const getIcons = (url: string, index: number) => {
-    return (<div className={s.imgContainer} style={{backgroundImage: `url(${url})`}} key={index}/>)
+    return (<div className={s.imgContainer} style={{ backgroundImage: `url(${url})` }} key={index}></div>)
   }
 
   let normalizedPics = []
-
   const formateArr = (arr: Array<string>) => {
 
     if (arr.length < 1) {

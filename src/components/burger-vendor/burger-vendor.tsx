@@ -6,13 +6,14 @@ import OrderDetails from '../order-details/order-details';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useAppSelector } from '../../services/hooks';
-import {FC, ReactNode} from "react";
+import {FC} from "react";
 
 interface IModalProps {
-    handleClose: () => void;
+  handleClose: () => void;
 }
 
 const BurgerVendor: FC<IModalProps> = ({  handleClose }) => {
+
   const { modalIsVisible, currentModalType, arrOfIngridients, dataIsLoading, dataHasError } = useAppSelector((store) => ({
     modalIsVisible: store.burgerVendor.modalIsVisible,
     currentModalType: store.burgerVendor.currentModalType,
@@ -37,9 +38,9 @@ const BurgerVendor: FC<IModalProps> = ({  handleClose }) => {
             </DndProvider>
 
             {modalIsVisible && (currentModalType === 'OrderDetails') &&
-              <Modal handleClose={handleClose}>
-                <OrderDetails />
-              </Modal>
+                <Modal handleClose={handleClose}>
+                  <OrderDetails />
+                </Modal>
             }
           </>
         )}

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useAppDispatch } from '../services/hooks';
 import { confirmAuthThunk } from '../services/actions/userActions';
 import { wsActions } from '../services/actions/wsActions';
-
 import styles from './profile.module.css';
 import { ProfileMenu } from '../components/profile-menu/profile-menu';
 import { getAccessTokenLiteral } from '../utils/cookie';
@@ -30,6 +29,7 @@ export function ProfileOrdersPage() {
     <section className={styles.wrap}>
       <ProfileMenu activeTab={'orderHistory'} />
       <div className={styles.profileInfo + " profile-inputs"}>
+
         <ScrollableList isPersonal={true} />
 
       </div>

@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-
 import styles from './auth-form.module.css';
 import { Link, Redirect } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../services/hooks';
@@ -26,7 +25,6 @@ export function ResetPassword() {
   const handleSubmit = useCallback(
     e => {
       e.preventDefault();
-
       const newPassword = form.password;
       const resetCode = form['resetCode'];
 

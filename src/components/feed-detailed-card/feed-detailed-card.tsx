@@ -1,9 +1,11 @@
-
 import s from './feed-detailed-card.module.css';
 import { useAppSelector } from '../../services/hooks';
 import { getOrderStatus, getPrice, getCompletedIngrList, getFormattedDate } from '../../utils/utils';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TIngredientObjData, } from '../../utils/types';
+
+
+
 
 export const FeedDetailedCard = () => {
   const orderData = useAppSelector(store => store.ws.detailedOrder);
@@ -26,7 +28,7 @@ export const FeedDetailedCard = () => {
   }
 
   const getIcon = (url: string) => {
-    return (<div className={s.imgContainer} style={{ backgroundImage: `url(${url})` }}></div>)
+    return (<div className={s.imgContainer} style={{backgroundImage: `url(${url})`}}/>)
   }
 
   const getListItem = (ingrObj: TIngredientObjData | null, amount: number = 1, index: number) => {
@@ -59,9 +61,7 @@ export const FeedDetailedCard = () => {
       <h5 className={s + ' text text_type_main-medium mb-6'}>Состав:</h5>
 
       <ul className={s.ingrList}>
-
         {bunItem ? getListItem(bunItem, 2, 999) : null}
-
         {restIngr ? restIngr.map( (ingr, index) => getListItem(ingr, 1, index)) : null}
       </ul>
 

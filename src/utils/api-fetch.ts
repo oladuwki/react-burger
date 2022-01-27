@@ -31,10 +31,10 @@ export function fetchUserRegistration(data: TRegistrationData) {
     },
     body: JSON.stringify(data), // email, password, name
   })
-    .then(checkResponse)
-    .then((res) => {
-      return res;
-    })
+      .then(checkResponse)
+      .then((res) => {
+        return res;
+      })
 }
 
 type TLogInData = {
@@ -50,10 +50,10 @@ export function fetchLogIn(data: TLogInData) {
     },
     body: JSON.stringify(data),
   })
-    .then(checkResponse)
-    .then((res) => {
-      return res;
-    })
+      .then(checkResponse)
+      .then((res) => {
+        return res;
+      })
 }
 
 export function fetchRequestResetCode(userEmail: string) {
@@ -64,10 +64,10 @@ export function fetchRequestResetCode(userEmail: string) {
     },
     body: JSON.stringify({ email: userEmail }),
   })
-    .then(checkResponse)
-    .then((res) => {
-      return res;
-    })
+      .then(checkResponse)
+      .then((res) => {
+        return res;
+      })
 }
 
 export function fetchResetPassword(newPassword: string, resetCode: string) {
@@ -81,10 +81,10 @@ export function fetchResetPassword(newPassword: string, resetCode: string) {
       "token": resetCode
     }),
   })
-    .then(checkResponse)
-    .then((res) => {
-      return res;
-    })
+      .then(checkResponse)
+      .then((res) => {
+        return res;
+      })
 }
 
 export function fetchGetUserData() {
@@ -96,12 +96,12 @@ export function fetchGetUserData() {
       authorization: getCookie('accessToken') as string,
     },
   })
-    .then(checkResponse)
-    .then((res) => {
-      if (res["success"] === false) {
-      }
-      return res;
-    })
+      .then(checkResponse)
+      .then((res) => {
+        if (res["success"] === false) {
+        }
+        return res;
+      })
 }
 
 type TChangeUserDataArg = {
@@ -124,12 +124,12 @@ export function fetchChangeUserData(form: TChangeUserDataArg) {
       "password": form.password,
     })
   })
-    .then(checkResponse)
-    .then((res) => {
-      if (res["success"] === false) {
-      }
-      return res;
-    })
+      .then(checkResponse)
+      .then((res) => {
+        if (res["success"] === false) {
+        }
+        return res;
+      })
 }
 
 export function fetchRefreshTokens() {
@@ -140,13 +140,13 @@ export function fetchRefreshTokens() {
     },
     body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
   })
-    .then(checkResponse)
-    .then((res) => {
-      if (res["success"] === false) {
-        return false;
-      }
-      return res;
-    });
+      .then(checkResponse)
+      .then((res) => {
+        if (res["success"] === false) {
+          return false;
+        }
+        return res;
+      });
 }
 
 export function fetchLogOut() {
@@ -157,10 +157,10 @@ export function fetchLogOut() {
     },
     body: JSON.stringify({ token: localStorage.getItem('refreshToken'), }),
   })
-    .then(checkResponse)
-    .then((res) => {
-      if (res["success"] === false) {
-      }
-      return res;
-    })
+      .then(checkResponse)
+      .then((res) => {
+        if (res["success"] === false) {
+        }
+        return res;
+      })
 }

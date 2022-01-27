@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-
 import styles from './auth-form.module.css';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { logInAppThunk, confirmAuthThunk } from '../services/actions/userActions';
@@ -14,7 +13,7 @@ import {
 
 export function LoginPage() {
   const [form, setFormValues] = useState({ email: '', password: '' });
-  const { isLoggedIn } = useAppSelector((store) => store.user); // TODO: типизируем в следующем спринте
+  const { isLoggedIn } = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
 
   const location = useLocation<{ from: Location }>();
@@ -22,13 +21,6 @@ export function LoginPage() {
   useEffect(() => {
     dispatch(confirmAuthThunk());
   }, [dispatch]);
-
-  useEffect(() => {
-    setFormValues(
-      { email: 'oladuwki@yandex.ru', password: '123123' }
-    );
-  }, [isLoggedIn, location]);
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...form, [e.target.name]: e.target.value });
