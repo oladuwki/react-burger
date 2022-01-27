@@ -4,7 +4,7 @@
 This application was created as a Yandex.Praktikum React-dev course study project
 
 Demo: https://oladuwki.github.io/react-stellar-burger/
-App: https://oladuwki-burger.nomoredomains.work/react-stellar-burger/
+App: https://oladuwki-burger.nomoredomains.work/
 ## Functionality
 
 * use drag and drop to create your own delicios burger
