@@ -3,7 +3,7 @@
 
 This application was created as a Yandex.Praktikum React-dev course study project
 
-Demo: https://oladuwki.github.io/react-stellar-burger/
+Demo: https://oladuwki.github.io/react-burger/
 App: https://oladuwki-burger.nomoredomains.work/
 ## Functionality
 
