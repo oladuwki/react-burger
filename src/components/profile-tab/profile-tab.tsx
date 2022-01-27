@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-
 import styles from './profile-tab.module.css';
 import { TProfileMenuTabsValue } from '../../utils/types';
 

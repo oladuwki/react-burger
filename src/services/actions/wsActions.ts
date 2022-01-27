@@ -68,7 +68,6 @@ export const onErrorAction = (): IonErrorAction => {
   };
 }
 
-
 export interface IonGotOrdersAction {
   readonly type: typeof WS_GOT_ORDERS;
   readonly ordersData: TOrdersStoreData;

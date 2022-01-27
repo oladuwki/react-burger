@@ -1,5 +1,4 @@
 import React from "react";
-
 import diStyles from "./draggable-item.module.css";
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { useDrag, useDrop } from "react-dnd";
@@ -21,7 +20,6 @@ type TDraggableItemProps = {
     resortIngrList: TResortIngrList,
     findIngridient: TFindIngredientInStore,
 }
-
 
 const DraggableItem: React.FC<TDraggableItemProps> = ({ ingrInstanceID, ingrData, ingrIndexInStoreArr, resortIngrList, findIngridient }) => {
     const dispatch = useAppDispatch();

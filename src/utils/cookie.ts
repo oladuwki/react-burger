@@ -24,6 +24,7 @@ export function setCookie(name: string, value: string | null, props: any) {
       updatedCookie += "=" + propValue;
     }
   }
+
   document.cookie = updatedCookie;
 }
 

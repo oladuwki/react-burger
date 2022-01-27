@@ -18,7 +18,7 @@ export type TUserState = {
   userChecked: boolean;
 };
 
-const initialState: TUserState = {
+export const userInitialState: TUserState = {
   isLoggedIn: false,
   userName: '',
   userEmail: '',
@@ -27,7 +27,7 @@ const initialState: TUserState = {
   userChecked: false,
 };
 
-export const userReducer = (state = initialState, action: TUserActionsUnion): TUserState => {
+export const userReducer = (state = userInitialState, action: TUserActionsUnion): TUserState => {
   switch (action.type) {
     case LOGIN_SUCCESSFUL: {
       return {
@@ -38,6 +38,7 @@ export const userReducer = (state = initialState, action: TUserActionsUnion): TU
         userChecked: true,
       }
     }
+
     case SET_USER_DATA: {
       return {
         ...state,
@@ -53,7 +54,7 @@ export const userReducer = (state = initialState, action: TUserActionsUnion): TU
         isLoggedIn: false,
         userName: '',
         userEmail: '',
-        userChecked: false,
+        userChecked: true,
       }
     }
     case LOGOUT_SUCCESSFUL: {
@@ -62,6 +63,7 @@ export const userReducer = (state = initialState, action: TUserActionsUnion): TU
         isLoggedIn: false,
         userName: '',
         userEmail: '',
+        userChecked: true,
       }
     }
     case ALLOW_RESET_PASSWORD: {
@@ -69,11 +71,13 @@ export const userReducer = (state = initialState, action: TUserActionsUnion): TU
         ...state,
         canResetPassword: true,
         hasResetPassword: false,
+        userChecked: true,
       }
     }
     case HAS_RESET_PASSWORD: {
       return {
         ...state,
+        userChecked: true,
         canResetPassword: false,
         hasResetPassword: true,
       }

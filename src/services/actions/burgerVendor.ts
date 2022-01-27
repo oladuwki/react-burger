@@ -1,8 +1,6 @@
 import { getCookie } from '../../utils/cookie';
-import { getAccessTokenLiteral } from '../../utils/cookie';
 import { TIngredientObjData, TOrderData, TDraggableIngr, TModalType } from '../../utils/types';
 import { AppDispatch, AppThunk } from '../store';
-import {checkResponse} from "../../utils/api-fetch";
 
 
 export const TOGGLE_MODAL_VISIBILITY: 'TOGGLE_MODAL_VISIBILITY' = 'TOGGLE_MODAL_VISIBILITY';
@@ -71,17 +69,17 @@ export interface ISetModalType {
 
 export interface IAddBun {
     readonly type: typeof ADD_BUN,
-    readonly value: TIngredientObjData,
+    readonly value: TDraggableIngr,
 }
 
 export interface IAddSauce {
     readonly type: typeof ADD_SAUCE,
-    readonly value: TIngredientObjData,
+    readonly value: TDraggableIngr,
 }
 
 export interface IAddMain {
     readonly type: typeof ADD_MAIN,
-    readonly value: TIngredientObjData,
+    readonly value: TDraggableIngr,
 }
 
 export interface IUpdateDraggableIngr {
@@ -104,10 +102,17 @@ export type TBurgerVendorActionsUnion = IToggleModalVisibility | ISetCurrentModa
 
 export const getIngridientsDataThunk: AppThunk = (url = '') => {
 
-    return function (dispatch) {
+    //@ts-ignore
+    return function (dispatch: AppDispatch) {
         fetch(url)
-            .then(checkResponse)
             .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(res.status);
+            })
+            .then((res) => {
+
                 if (!(Array.isArray(res.data))) {
                     return Promise.reject(res);
                 }
@@ -131,17 +136,21 @@ export const postBurgerOrderThunk: AppThunk = (url = '', createPostBody: any) =>
             type: SET_CONSTRUCTOR_LOADER,
             value: true,
         });
-
-        fetch(url + `?token=${getAccessTokenLiteral()}`, {
+        fetch(url, {
             method: 'POST',
-            // @ts-ignore
+            //@ts-ignore
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 authorization: getCookie('accessToken'),
             },
             body: JSON.stringify(createPostBody())
         })
-            .then(checkResponse)
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(res.status);
+            })
             .then((res) => {
                 dispatch({
                     type: SET_ORDER_STATE,

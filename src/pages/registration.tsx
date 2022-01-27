@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../services/hooks';
-
 import styles from './auth-form.module.css';
 import { Link, Redirect } from 'react-router-dom';
 import { confirmAuthThunk, registerNewUserThunk } from '../services/actions/userActions';
@@ -23,7 +22,7 @@ export function RegistrationPage() {
 
    useEffect(() => {
     setFormValues(
-      { email: 'oladuwki@yandex.ru', name: 'oladuwki', password: '123123' }
+      { email: 'oladuwki@yandex.ru', name: 'Oladuwki', password: '123123' }
     );
   }, [isLoggedIn]);
 

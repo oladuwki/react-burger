@@ -28,7 +28,7 @@ export type TBurgerVendorReducer = {
         ingrDataIsLoading: boolean,
         ingrDataHasError: boolean,
     }
-    bun: TIngredientObjData,
+    bun: TDraggableIngr,
     draggableIngridients: Array<TDraggableIngr>,
 
     modalIsVisible: boolean,
@@ -54,14 +54,30 @@ export const blankIngr: TIngredientObjData  = {
     __v: 0,
 }
 
-const initialState: TBurgerVendorReducer = {
+export const blankDraggableIngr: TDraggableIngr = {
+    _id: '',
+    name: '',
+    type: 'main',
+    proteins: 0,
+    fat: 0,
+    carbohydrates: 0,
+    calories: 0,
+    price: 0,
+    image: '',
+    image_mobile: '',
+    image_large: '',
+    __v: 0,
+    instanceID: 0,
+}
+
+export const initialState: TBurgerVendorReducer = {
     ingridientsData: {
         arrOfIngridients: [],
         ingrDataIsLoading: false,
         ingrDataHasError: false,
     },
 
-    bun: blankIngr,
+    bun: blankDraggableIngr,
     draggableIngridients: [],
 
     modalIsVisible: false,
@@ -149,19 +165,21 @@ export const burgerVendorReducer = (state = initialState, action: TBurgerVendorA
             }
         }
         case ADD_SAUCE: {
-            const instanceID = (new Date()).getTime();
-            const objIngridientWithId: TDraggableIngr = { ...action.value, instanceID };
             return {
                 ...state,
-                draggableIngridients: state.draggableIngridients.concat(objIngridientWithId)
+                draggableIngridients: [
+                    ...state.draggableIngridients,
+                    action.value,
+                ]
             }
         }
         case ADD_MAIN: {
-            const instanceID = (new Date()).getTime();
-            const objInstance = { ...action.value, instanceID };
             return {
                 ...state,
-                draggableIngridients: state.draggableIngridients.concat(objInstance)
+                draggableIngridients: [
+                    ...state.draggableIngridients,
+                    action.value,
+                ]
             };
         }
         case UPDATE_DRAGGABLE_INGRIDIENTS: {
@@ -185,7 +203,7 @@ export const burgerVendorReducer = (state = initialState, action: TBurgerVendorA
         case REMOVE_ALL_INGRIDIENTS: {
             return {
                 ...state,
-                bun: blankIngr,
+                bun: blankDraggableIngr,
                 draggableIngridients: []
             }
         }

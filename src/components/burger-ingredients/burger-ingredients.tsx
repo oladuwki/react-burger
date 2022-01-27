@@ -9,7 +9,6 @@ import {
 import { TIngredientType } from '../../utils/types';
 
 function BurgerIngredients() {
-
     const [currentTab, setCurrentTab] = React.useState<string>("bun");
 
     const bunRef = useRef<HTMLDivElement>(null);

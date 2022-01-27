@@ -1,5 +1,4 @@
 import React, { useCallback, useState, useEffect } from 'react';
-
 import styles from './auth-form.module.css';
 import { Link, Redirect } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../services/hooks';
@@ -33,7 +32,9 @@ export function ForgotPage() {
   const handleSubmit = useCallback(
     e => {
       e.preventDefault();
+
       dispatch(requestResetCodeThunk(form.email));
+
     }, [dispatch, form]
   );
 

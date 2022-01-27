@@ -22,7 +22,8 @@ export type TwsState = {
   detailedOrder: TOrder,
 }
 
-const initialState: TwsState = {
+
+export const wsInitialState: TwsState = {
   wsConnected: false,
   wsError: false,
   ordersData: {
@@ -42,7 +43,7 @@ const initialState: TwsState = {
   },
 };
 
-export const wsReducer = (state = initialState, action: TwsActionsUnion): TwsState => {
+export const wsReducer = (state = wsInitialState, action: TwsActionsUnion): TwsState => {
   switch (action.type) {
     case WS_CONNECTED_SUCCESSFULLY:
       return {

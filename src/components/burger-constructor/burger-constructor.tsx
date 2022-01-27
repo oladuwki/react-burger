@@ -1,15 +1,15 @@
 /* eslint-disable */
 import React, { useState } from "react";
 import { useCallback } from "react";
-
 import s from "./burger-constructor.module.css";
 import DraggableItem from "../draggable-item/draggable-item";
 import { useDrop } from "react-dnd";
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { Loader } from "../loader/loader";
+import { getInstanceID } from '../../utils/utils';
 
 import { useHistory } from 'react-router-dom';
-import { TIngredientType, TIngredientObjData, TIngredientInStore, TFindIngredientInStore, TResortIngrList } from '../../utils/types';
+import { TIngredientType, TIngredientObjData, TIngredientInStore, TFindIngredientInStore, TResortIngrList, TDraggableIngr } from '../../utils/types';
 
 import {
   postBurgerOrderThunk,
@@ -61,9 +61,12 @@ function BurgerConstructor() {
   };
 
   const addIngridientInConstructor = (objIngridient: TIngredientObjData) => {
+
+    const objIngridientWithId: TDraggableIngr = { ...objIngridient, instanceID: getInstanceID() };
+
     dispatch({
       type: getAction(objIngridient.type),
-      value: objIngridient,
+      value: objIngridientWithId,
     })
   };
 
@@ -76,6 +79,7 @@ function BurgerConstructor() {
       background: monitor.isOver() ? 'radial-gradient(circle, rgba(63,94,251,0.6110819327731092) 0%, rgba(252,70,107,0) 44%)' : '',
     }),
   });
+
 
   const findIngridientInStore = useCallback<TFindIngredientInStore>(
     (targetIngrID) => {
@@ -191,7 +195,7 @@ function BurgerConstructor() {
             <div style={{ margin: '0 auto' }}>
               {(!chosenBun.name) && (chosenDraggableIngr.length < 1) &&
                 (
-                  <span className={'text text_type_main-medium mr-10'} style={{ textAlign: 'center', justifyContent: 'center', display: 'table-cell', paddingRight: '40px' }}>
+                  <span className={'text text_type_main-medium mr-10'} style={{ textAlign: 'center', justifyContent: 'center', display: 'table-cell', paddingRight: '40px' }}>{/* TODO: вынести стили в module.css */}
                     Перетащите сюда ингридиенты, <br></br>которые хотите добавить в бургер
                   </span>
                 )

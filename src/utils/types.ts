@@ -51,6 +51,7 @@ export type TLoginForm = {
   password: string,
 }
 
+
 export type TOrderData = {
   success: boolean,
   name: string,
