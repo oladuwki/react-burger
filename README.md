@@ -1,6 +1,8 @@
 # Stellar Burgers
 Yandex.Praktikum React-dev course study project
 
+My app:
+oladuwki-burger.nomoredomains.work
 ### `npm start`
 
 Runs the app in the development mode.\
